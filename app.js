@@ -17,8 +17,17 @@ var users   = require('./routes/users');
 var app     = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.engine('.html', require('ejs').__express);
+app.set('views', __dirname + '/views');
+app.set('view engine', 'html');
+
+// Dummy users
+var users = [
+  { name: 'tobi', email: 'tobi@learnboost.com' },
+  { name: 'loki', email: 'loki@learnboost.com' },
+  { name: 'jane', email: 'jane@learnboost.com' }
+];
+
 
 app.use(favicon());
 app.use(logger('dev'));
@@ -33,8 +42,18 @@ app.use(function(req,res,next){
     next();
 });
 
-app.use('/', routes);
-app.use('/users', users);
+app.get('/', function(req, res){
+    res.render('users', 
+        {
+            users: users,
+            title: "EJS example",
+            header: "Some users"
+        }
+    );
+});
+
+//app.use('/', routes);
+//app.use('/users', users);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
