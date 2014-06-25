@@ -1,10 +1,10 @@
 nuevosproyectos = [{"nombre": "proyecto1"}, {"nombre": "proyecto2"}, {"nombre": "proyecto3"}]
 db.proyecto.insert(nuevosproyectos);
 
-nuevosrequerimiento = [{"nombre": "requerimiento1", "descripcion": "este es el requerimiento 1", "proyecto": "proyecto1", "clasificacion": "funcional"},
-                       {"nombre": "requerimiento2", "descripcion": "este es el requerimiento 2", "proyecto": "proyecto2", "clasificacion": "no funcional"},
-                       {"nombre": "requerimiento3", "descripcion": "este es el requerimiento 3", "proyecto": "proyecto3", "clasificacion": "funcional"},
-                       {"nombre": "requerimiento4", "descripcion": "este es el requerimiento 4", "proyecto": "proyecto1", "clasificacion": "no funcional"}]
+nuevosrequerimientos = [{"nombre": "requerimiento1", "descripcion": "este es el requerimiento 1", "proyecto": "proyecto1", "clasificacion": "funcional"},
+                        {"nombre": "requerimiento2", "descripcion": "este es el requerimiento 2", "proyecto": "proyecto2", "clasificacion": "no funcional"},
+                        {"nombre": "requerimiento3", "descripcion": "este es el requerimiento 3", "proyecto": "proyecto3", "clasificacion": "funcional"},
+                        {"nombre": "requerimiento4", "descripcion": "este es el requerimiento 4", "proyecto": "proyecto1", "clasificacion": "no funcional"}]
 db.requerimiento.insert(nuevosrequerimientos);
 
 
