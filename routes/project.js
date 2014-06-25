@@ -22,7 +22,7 @@ router.get('/:projectName', function(req, res) {
     console.log(projectName);
     var db = req.db;
     var collection = db.get('requerimiento');
-    collection.find({proyecto: projectName}, 'nombre',function(e,requirements){
+    collection.find({proyecto: projectName},function(e,requirements){
         console.log(requirements);
         // test.html -> Para pruebas
         res.render('test', 
