@@ -1,6 +1,0 @@
-<h1>Test</h1>
-<ul id="proyectos">
-  <% requerimientos.forEach(function(requerimiento){ %>
-    <li><%= requerimiento.nombre %> </li>
-  <% }) %>
-</ul>
