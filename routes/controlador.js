@@ -119,6 +119,54 @@ router.post('/addrequirement', function(req, res) {
 });
 
 
+// Eliminar un requerimiento (sus tareas incluidas) asociado a un usuario 
+// y proyecto en la base de datos.
+router.delete('/deleterequirement', function(req, res) {
+
+    var db                      = req.db;
+    var requirementName 	    = req.body.requerimiento;
+    var projectName 		    = req.body.proyecto;
+    var username 		        = req.body.usuario;
+    var taskCollection          = db.get('tarea');
+    var requirementCollection 	= db.get('requerimiento');
+
+    // Aqui se eliminan todas las tareas asociadas al requerimiento que se eliminara.
+    taskCollection.remove(
+    	{	requerimiento 	: requirementName, 
+    		proyecto 		: projectName, 
+    		usuario 		: username
+    	}, 
+    	function (err, result) {
+
+	        if (err) {
+	            res.send("The database has defended itself against the dark magic.");
+	        }
+	        else {
+
+	        	requirementCollection.remove(
+			    	{	nombre 			: requirementName, 
+			    		proyecto 		: projectName, 
+			    		usuario 		: username
+			    	}, function (err1, result1){
+			    		if (err) {
+			    			res.send(
+			    				"Solo se borraron las tareas de este proyecto."
+			    			);
+			    		} else {
+			    			res.json(
+			    			{
+			    				proyectoBorrado: result1,
+			    				tareasBorradas: result
+			    			}
+			    			);
+			    		}
+			    	});
+	        }
+    });
+
+});
+
+
 // Se obtienen las tareas asociadas a un usuario, proyecto y requerimiento 
 // dado.
 router.get('/tasks', function(req, res) {
@@ -152,7 +200,7 @@ router.get('/tasks', function(req, res) {
 });
 
 
-// Insertar una tarea asociado a un usuario y proyecto en la 
+// Insertar una tarea asociado a un usuario, requerimiento y proyecto en la
 // base de datos.
 router.post('/addtask', function(req, res) {
 
@@ -178,6 +226,37 @@ router.post('/addtask', function(req, res) {
             res.json(doc);
         }
     });
+});
+
+
+// Eliminar una tarea asociado a un usuario, requerimiento y proyecto en la 
+// base de datos.
+router.delete('/deletetask', function(req, res) {
+
+    var db                      = req.db;
+    var requirementName 	    = req.body.requerimiento;
+    var projectName 		    = req.body.proyecto;
+    var username 		        = req.body.usuario;
+    var taskName 				= req.body.tarea;
+    var taskCollection          = db.get('tarea');
+
+    taskCollection.remove(
+    	{	nombre 			: taskName, 
+    		requerimiento 	: requirementName, 
+    		proyecto 		: projectName, 
+    		usuario 		: username
+    	}, 
+    	function (err, result) {
+
+	        if (err) {
+	            res.send("The database has defended itself against the dark magic.");
+	        }
+	        else {
+
+	        	res.json(result);
+	        }
+    });
+
 });
 
 module.exports = router;
