@@ -15,12 +15,4 @@ Recomiendo que en el directorio el proyecto hagan esto antes de comenzar:
 Una vez listo eso ya pueden probar el proyecto haciendo:
 - npm start
 
-Eso va a iniciar el servidor y al visitar en su navegador la direccion:
-- http://localhost:3000
-
-Deberia aparecer la pagina de bienvenida de Express.
-
-Si las cosas han funcionado hasta ese momento ahora es necesario que creen su propia base de datos dentro del directorio data como se especifica en el tutorial. Se tiene un archivo .gitignore especificamente en la carpeta data para que nuestras bases de datos no se compartan en el repositorio pero idealmente los cambios realizados podran aplicar a las bases de datos de cada uno si las hacemos con el mismo formato. Inserten algunos documentos en la base de datos como se especifica en el tutorial y ya deberian poder visitar:
-- http://localhost:3000/userlist
-
-El nombre de la base de datos es requirements
+Si las cosas han funcionado hasta ese momento ahora es necesario que creen su propia base de datos dentro del directorio data como se especifica en el tutorial. Se tiene un archivo .gitignore especificamente en la carpeta data para que nuestras bases de datos no se compartan en el repositorio pero idealmente los cambios realizados podran aplicar a las bases de datos de cada uno si las hacemos con el mismo formato. Inserten algunos documentos en la base de datos como se especifica en el tutorial. El nombre de la base de datos debe ser requirements. Recomiendo que utilicen postman para probar las cosas que devuelve la aplicacion guiandose por el documento en Drive que se llama Request Frontend.
