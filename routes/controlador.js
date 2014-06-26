@@ -124,9 +124,9 @@ router.post('/addrequirement', function(req, res) {
 router.delete('/deleterequirement', function(req, res) {
 
     var db                      = req.db;
-    var requirementName 	    = req.body.requerimiento;
-    var projectName 		    = req.body.proyecto;
-    var username 		        = req.body.usuario;
+    var requirementName 	    = req.param('requerimiento');
+    var projectName 		    = req.param('proyecto');
+    var username 		        = req.param('usuario');
     var taskCollection          = db.get('tarea');
     var requirementCollection 	= db.get('requerimiento');
 
@@ -234,10 +234,10 @@ router.post('/addtask', function(req, res) {
 router.delete('/deletetask', function(req, res) {
 
     var db                      = req.db;
-    var requirementName 	    = req.body.requerimiento;
-    var projectName 		    = req.body.proyecto;
-    var username 		        = req.body.usuario;
-    var taskName 				= req.body.tarea;
+    var requirementName 	    = req.param('requerimiento');
+    var projectName 		    = req.param('proyecto');
+    var username 		        = req.param('usuario');
+    var taskName 				= req.param('tarea');
     var taskCollection          = db.get('tarea');
 
     taskCollection.remove(
