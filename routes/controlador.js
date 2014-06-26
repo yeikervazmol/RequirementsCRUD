@@ -3,6 +3,7 @@ var router = express.Router();
 
 // Aqui se autentica al usuario de forma sencilla y se obtienen sus proyectos.
 router.post('/login', function(req, res) {
+	
 	var username 			= req.body.usuario;
 	var password 			= req.body.clave;
 	var db 					= req.db;
@@ -40,9 +41,9 @@ router.post('/login', function(req, res) {
 	});
 });
 
+
 // Insertar un proyecto a un usuario en la base de datos.
 router.post('/addproject', function(req, res) {
-
 
     var db 					= req.db;
 	var projectName 		= req.body.proyecto;
@@ -65,9 +66,9 @@ router.post('/addproject', function(req, res) {
 });
 
 
-
 // Se obtienen los requerimientos asociados a un usuario y proyecto dado.
 router.get('/requirements', function(req, res) {
+	
 	var project 				= req.param('proyecto');
 	var username 				= req.param('usuario');
 	var db 						= req.db;
@@ -87,9 +88,41 @@ router.get('/requirements', function(req, res) {
 	});
 });
 
+
+// Insertar un requerimiento asociado a un usuario y proyecto en la 
+// base de datos.
+router.post('/addrequirement', function(req, res) {
+
+    var db 						= req.db;
+	var requirementName 		= req.body.requerimiento;
+	var description 			= req.body.descripcion;
+    var projectName 			= req.body.proyecto;
+    var username 		    	= req.body.usuario;
+    var clasificacion 			= req.body.clasificacion;
+    var requirementCollection 	= db.get('requerimiento');
+
+    requirementCollection.insert({
+        "nombre"        : requirementName,
+        "descripcion"   : description,
+        "proyecto"      : projectName,
+        "usuario"       : username,
+        "clasificacion" : clasificacion
+        
+    }, function (err, doc) {
+        if (err) {
+            res.send("The database has defended itself against the dark magic.");
+        }
+        else {
+            res.json(doc);
+        }
+    });
+});
+
+
 // Se obtienen las tareas asociadas a un usuario, proyecto y requerimiento 
 // dado.
 router.get('/tasks', function(req, res) {
+	
 	var project 				= req.param('proyecto');
 	var username 				= req.param('usuario');
 	var requirementName 		= req.param('requerimiento');
@@ -116,6 +149,35 @@ router.get('/tasks', function(req, res) {
 			);
 		});
 	});
+});
+
+
+// Insertar una tarea asociado a un usuario y proyecto en la 
+// base de datos.
+router.post('/addtask', function(req, res) {
+
+    var db                  = req.db;
+	var taskName 	        = req.body.tarea;
+	var description 		= req.body.descripcion;
+    var requirementName 	= req.body.requerimiento;
+    var projectName 		= req.body.proyecto;
+    var username 		    = req.body.usuario;
+    var taskCollection 		= db.get('tarea');
+
+    taskCollection.insert({
+        "nombre"        : taskName,
+        "descripcion"   : description,
+        "requerimiento" : requirementName,
+        "proyecto"      : projectName,
+        "usuario"       : username
+    }, function (err, doc) {
+        if (err) {
+            res.send("The database has defended itself against the dark magic.");
+        }
+        else {
+            res.json(doc);
+        }
+    });
 });
 
 module.exports = router;
