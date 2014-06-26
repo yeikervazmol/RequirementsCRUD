@@ -166,6 +166,38 @@ router.delete('/deleterequirement', function(req, res) {
 
 });
 
+// Modificar un requerimiento
+// Dado el nombre antiguo del requerimiento a modificar, el proyecto al que pertenece y su usuario, es modificado el requerimiento
+router.put('/updaterequirement', function(req, res) {
+
+    var db                      = req.db;
+    var requirementNameOld 	    = req.body.requerimientoViejo;
+    var requirementNameNew 	    = req.body.requerimientoNuevo;
+    var descriptionNew          = req.body.descripcionNueva;
+    var classificationNew       = req.body.clasificacionNueva;
+    var projectName 		    = req.body.proyecto;
+    var username 		        = req.body.usuario;
+    var requirementCollection 	= db.get('requerimiento');
+
+    requirementCollection.update({nombre: requirementNameOld, proyecto: projectName, usuario: username}, 
+                                 { 
+                                    "nombre"        : requirementNameNew,
+                                    "descripcion"   : descriptionNew,
+                                    "proyecto"      : projectName,
+                                    "usuario"       : username,
+                                    "clasificacion" : classificationNew 
+                                }, function (err, result) {
+
+        if (err) {
+            res.send("No se pudo modificar el requerimiento");
+        }
+        else {
+
+        	res.json(result);
+        }
+    });
+
+});
 
 // Se obtienen las tareas asociadas a un usuario, proyecto y requerimiento 
 // dado.
