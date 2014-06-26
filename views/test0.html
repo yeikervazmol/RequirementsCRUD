@@ -1,0 +1,11 @@
+<% usuarios.forEach(function(usuario){ %>
+	<h1>Bienvenido <%= usuario.nombre %>!</h1>
+<% }) %>
+
+<h2>Estos son tus proyectos:</h2>
+<ul id="proyectos">
+  <% proyectos.forEach(function(proyecto){ %>
+    <li><h3><%= proyecto.nombre %></h3></li>
+  <% }) %>
+</ul>
+

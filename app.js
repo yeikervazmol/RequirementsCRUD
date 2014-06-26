@@ -11,8 +11,7 @@ var mongo   = require('mongodb');
 var monk    = require('monk');
 var db      = monk('localhost:27017/requirements');
 
-var projects  = require('./routes/project');
-//var users   = require('./routes/users');
+var controlador      = require('./routes/controlador');
 
 var app     = express();
 
@@ -35,18 +34,7 @@ app.use(function(req,res,next){
     next();
 });
 
-/*app.get('/', function(req, res){
-    res.render('users', 
-        {
-            users: users,
-            title: "EJS example",
-            header: "Some users"
-        }
-    );
-}); */
-
-app.use('/projects', projects);
-//app.use('/users', users);
+app.use('/', controlador);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
