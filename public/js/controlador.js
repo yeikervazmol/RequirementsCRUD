@@ -11,6 +11,7 @@ function ControladorReqs($scope,$http) {
   $scope.parte5="none";
   $scope.parte6="none";
   $scope.parte7="none";
+  $scope.parte8="none";
   
 //   Se llenaria con la lista de usuarios y claves de la bd
   $scope.usuarios=[];
@@ -111,10 +112,22 @@ function ControladorReqs($scope,$http) {
   //Funcion que agrega un nuevo requerimiento al proyecto con el que se esta
   //trabajando.
   $scope.newreque= function(){
-      $scope.requerimientos.push({nombre:$scope.nombrereq, descr:$scope.descrreq, categoria: $scope.categreq});
+
+    $http.post('/addrequirement',{
+      requerimiento : $scope.nombrereq,
+      descripcion : $scope.descrreq,
+      clasificacion : $scope.categreq,
+      usuario : $scope.usuario,
+      proyecto : $scope.proyecto
+    }).success(function(){
+      $scope.abrirProyecto($scope.proyecto);
       $scope.descrreq="";
       $scope.nombrereq="";
       $scope.categreq="";   
+  
+
+    });
+      
   };
   
   //Par de funciones que hacen visible las secciones para la modificacion
@@ -126,6 +139,10 @@ function ControladorReqs($scope,$http) {
   $scope.modificarCategoria= function(){
     $scope.parte7="block";   
   };
+
+  $scope.modificarTarea=function(){
+    $scope.parte8="block";
+  }
   
   
   //Funcion que es ejecutada para modificar la descripcion de un requerimiento.
@@ -161,11 +178,17 @@ function ControladorReqs($scope,$http) {
   //Se elimina del arreglo, luego debe hacerse persistente en la bd.
   $scope.eliminarReq= function(re){
     //Busco index en el arreglo del req a eliminar y luego uso splice
-    for (w=0;w<$scope.requerimientos.length;w++){
-      if ($scope.requerimientos[w].nombre == re.nombre){
-	$scope.requerimientos.splice(w,1);
+
+    $htpp.delete('/deleterequirement',{
+      param : {
+        requerimiento : re,
+        proyecto : $scope.proyecto,
+        usuario : $scope.usuario
       }
-    }
+      
+    }).success(function(data){
+        $scope.abrirProyecto($scope.proyecto);
+      });
   };
   
   //Funcion que retorna a la pagina inicio, y reinicializa todo.
@@ -177,6 +200,7 @@ function ControladorReqs($scope,$http) {
     $scope.parte5="none";
     $scope.parte6="none";
     $scope.parte7="none";
+    $scope.parte8="none";
     $scope.requerimientoActual="";
     $scope.requerimientos=[];
     $scope.usuario="";

@@ -158,7 +158,7 @@ router.delete('/deleterequirement', function(req, res) {
 			    				"Solo se borraron las tareas de este proyecto."
 			    			);
 			    		} else {
-			    			res.json(
+			    			return res.json(
 			    			{
 			    				proyectoBorrado: result1,
 			    				tareasBorradas: result

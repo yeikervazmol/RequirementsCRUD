@@ -55,7 +55,7 @@
 	<ul>
 	    <li ng-repeat="re in requerimientos">
 	      <a href="" ng-click="abrirRequerimiento(re.nombre)"> 
-		{{re.nombre}} <a href="" style="color: red" ng-click="eliminarReq(re.nombre)()"> (eliminar) </a> 
+		{{re.nombre}} <a href="" style="color:red" ng-click="eliminarReq(re.nombre)"> (eliminar) </a> 
 	      </a>  
 	  </li>
 	</ul>
@@ -80,7 +80,7 @@
 	  <li> Descripcion <a href="" ng-click="modificarDescripcion(nombreReq)"> (modificar): </a><p> {{descrReq}} </p>
 	    <div id="modifDescripcion" style="display:{{parte6}}">
 	      <!--Formulario para procesar la modificacion de descrp de requisito.-->
-	      <form ng-submit="newdescrreq()">
+	      <form ng-submit="newdescrreq(nombreReq)">
 		<textarea ng-model="newdescr" ROWS=3 COLS=30 > </textarea>
 		<button type="submit"> Save </button>
 	      </form>
@@ -90,21 +90,37 @@
 	  <li> Categoria <a href="" ng-click="modificarCategoria(nombreReq)()"> (modificar) </a>: <p> {{categoriaReq}}</p>
 	    <div id="modifDescripcion" style="display:{{parte7}}">
 	      <!--Formulario para procesar la modificacion de categoria de requisito.-->
-	      <form ng-submit="newcategreq()">
+	      <form ng-submit="newcategreq(nombreReq)">
 		<textarea ng-model="newcateg" ROWS=3 COLS=30 > </textarea>
 		<button type="submit"> Save </button>
 	      </form>
 	    </div>
 	  </li>
 	  <li>Tareas asociadas:
-	  <ul>
+	  	<ul>
 		  <li ng-repeat="tarea in tareasReq">
 		  		{{tarea.nombre}} <a href="" style="color: red" ng-click="eliminarTarea(tarea.nombre)()"> (eliminar) </a> <a href="" ng-click="modificarTarea(tarea.nombre)"> (modificar): </a>
+		  		<div id="modifDescripcion" style="display:{{parte8}}">
+	      			<!--Formulario para procesar la modificacion de tarea de requisito.-->
+	      			<form ng-submit="newdesctask(tarea.nombre)">
+						<textarea ng-model="newtask" ROWS=2 COLS=30 > </textarea>
+						<button type="submit"> Save </button>
+					</form>
+				</div>
 		  		<div>{{tarea.descripcion}}</div>
 		  </li>
+		  
+		</ul>
+	 </li>
+	 <!--Formulario para agregar nuevas tareas.-->
+			<form ng-submit="newtask()">
+			  <p> Agregar Tarea: </p>
 
-	</ul>
-	  </li>
+			    <li><input type="text" ng-model="nombretask" placeholder="Nombre de la tarea"><br></br></li>
+
+			  <button type="submit"> Agregar </button>
+			</form>
+	 <button 
 	</ul>
 	<a href="" ng-click="volver()"> Volver </a>
       </div>   
