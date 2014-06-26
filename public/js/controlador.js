@@ -1,7 +1,6 @@
 // Funcion que ejerce las veces de controlador para la region del html definida
 // en index.html.
-
-function ControladorReqs($scope) {
+function ControladorReqs($scope,$http) {
   
 //   variables que sirven para hacer visible o no regiones especificas del html.
 //   (parte del atributo style="display:<parte>")
@@ -14,11 +13,10 @@ function ControladorReqs($scope) {
   $scope.parte7="none";
   
 //   Se llenaria con la lista de usuarios y claves de la bd
-  $scope.usuarios=[{nombre:"carlos", clave:"hola"},{nombre:"pepe", clave:"hola2"},
-                   {nombre:"kiwi", clave:"naranja"}];
+  $scope.usuarios=[];
   $scope.error_login="";
   //Proyectos que deberan ser cargados desde la bd
-  $scope.proyectos=["proyecto1", "proyecto2", "proyecto3"];
+  $scope.proyectos=[];
   
   //Funcion que se encarga de validar a un usuario. Lo busca en un arreglo llamado
   //usuarios (este arreglo debe ser llenado al inicio, es decir siempre tenerlo llenado).
@@ -27,23 +25,34 @@ function ControladorReqs($scope) {
   $scope.login= function(){
     var encontre=0;
     var i;
-    for (i=0; i< $scope.usuarios.length; i++){
-      if (($scope.usuarios[i].nombre == $scope.usuario) && ($scope.usuarios[i].clave == $scope.clave)){
-	encontre=1;
+
+
+
+    $http.post('/login',{ usuario : $scope.usuario, clave : $scope.clave})
+
+    .success(function(data){
+      
+      if(data.usuario == "Usuario no autorizado"){
+        $scope.error_login = "Usuario no autorizado";
+      }else{
+        $scope.usuario = data.usuario;
+        $scope.proyectos = data.proyectos;
+        $scope.parte2="block";
+        $scope.parte1="none";
+        $scope.error_login="";
       }
-    }
-    if (encontre == 1){
-      $scope.parte2="block";
-      $scope.parte1="none";
-      $scope.error_login="";
-    }
-    else{
-      $scope.error_login="Clave/contrasena invalidos: intente de nuevo";
-      $scope.usuario="";
-      $scope.clave="";
-    }
+
+    })
+
+    .error(function(){
+      $scope.usuario = "Usrizado";
+
+
+    });
   };
-  
+
+
+
   //Funcion que es llamada cuando se clickea sobre un proyecto para desplegar
   //los requerimientos del mismo. Simplemente hace visible y no visible la
   //parte deseada del html.En laa variable proyecto se almacena el nombre
@@ -52,14 +61,22 @@ function ControladorReqs($scope) {
   //IMPORTANTE BD: Al momento de hacer esto, se debe traer de la base de datos
   //todos los requerimientos y tareas asociadas a dicho proyecto.
   $scope.abrirProyecto= function(a){
-    $scope.parte2="none"
-    $scope.parte3="block";
-    $scope.proyecto=a;
-    $scope.requerimientos=[{nombre: "Requerimiento 1", descr:"bla bla bla", proy:"proyecto1", categoria:"funcional"},
-			 {nombre: "Requerimiento 2", descr:"bla bla bla", proy:"proyecto1", categoria:"funcional"},
-			 {nombre: "Requerimiento 3", descr:"bla bla bla", proy:"proyecto1", categoria:"no funcional"},
-			 {nombre: "Requerimiento 4", descr:"bla bla bla", proy:"proyecto1", categoria:"funcional"},
-			 {nombre: "Requerimiento 5", descr:"bla bla bla", proy:"proyecto1", categoria:"no funcional"}];
+    
+
+    $http.get('/requirements',{params :{usuario : $scope.usuario, proyecto : a}}).success(function(data){
+      $scope.proyecto = data.proyecto;
+      $scope.parte2="none"
+      $scope.parte3="block";
+      
+      $scope.requerimientos=data.requerimientos;
+
+    })
+
+    .error(function(){
+      $scope.proyecto = "Error";
+
+    })
+    
   };
   
   //Funcion que es llamada cuando el usuario desea ver en detalle un
@@ -67,9 +84,19 @@ function ControladorReqs($scope) {
   //clickeado. La variable del scope requerimientoActual hace referencia
   //al requerimiento que se esta trabajandoo visualizando en detalle.
   $scope.abrirRequerimiento= function(a){
-    $scope.parte5="block";
-    $scope.parte3="none";
-    $scope.requerimientoActual=a;
+    $http.get('/tasks', {params:{usuario : $scope.usuario,
+                                  proyecto : $scope.proyecto,
+                                  requerimiento : a}})
+    .success(function(data){
+      $scope.parte5="block";
+      $scope.parte3="none";
+      $scope.nombreReq = data.requerimiento;
+      $scope.descrReq = data.descripcion;
+      $scope.categoriaReq = data.categoria;
+      $scope.tareasReq = data.tareas;
+
+    });
+    
   };
   
   //Funcion para volver a la lista de requerimientos una vez se ha visto

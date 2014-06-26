@@ -4,7 +4,7 @@
     <title>Requisitos</title>
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
-    <script type="text/javascript" src="controlador.js"></script>
+    <script type="text/javascript" src="js/controlador.js"></script>
   </head>
 
   <!--Cuerdo de la aplicacion: colocamos ng-app para aseverar que es una app
@@ -35,10 +35,10 @@
       esten en el arreglo "proyectos" del controlador.La persona seleccionara
       uno de ellos haciendole click.-->
       <div id="exito" style="display:{{parte2}}">
-	<p> Bienvenido, con que proyecto desea trabajar: </p>
+	<p> Bienvenido {{usuario}}, con que proyecto desea trabajar: </p>
 	<ul>
 	  <li ng-repeat="pro in proyectos">
-	  <a href="" ng-click="abrirProyecto(pro)"> {{pro}}  </a>
+	  <a href="" ng-click="abrirProyecto(pro.nombre)"> {{pro.nombre}}  </a>
 	  </li>
 	</ul>     
       </div>
@@ -54,8 +54,8 @@
 	<h4> Requerimientos para {{proyecto}} </h4>
 	<ul>
 	    <li ng-repeat="re in requerimientos">
-	      <a href="" ng-click="abrirRequerimiento(re)"> 
-		{{re.nombre}} <a href="" style="color: red" ng-click="eliminarReq(re)()"> (eliminar) </a> 
+	      <a href="" ng-click="abrirRequerimiento(re.nombre)"> 
+		{{re.nombre}} <a href="" style="color: red" ng-click="eliminarReq(re.nombre)()"> (eliminar) </a> 
 	      </a>  
 	  </li>
 	</ul>
@@ -75,9 +75,9 @@
       <!--Parte de la pagina en la cual el usuario podra ver en detalle un 
       requerimiento dado.Ofrece la posibilidad de modificar el requerimiento.-->
       <div id="muestraRequerimiento" style="display:{{parte5}}">
-	<h4> {{requerimientoActual.nombre}} </h4>
+	<h4> {{nombreReq}} </h4>
 	<ul>
-	  <li> Descripcion <a href="" ng-click="modificarDescripcion()"> (modificar): </a><p> {{requerimientoActual.descr}} </p>
+	  <li> Descripcion <a href="" ng-click="modificarDescripcion(nombreReq)"> (modificar): </a><p> {{descrReq}} </p>
 	    <div id="modifDescripcion" style="display:{{parte6}}">
 	      <!--Formulario para procesar la modificacion de descrp de requisito.-->
 	      <form ng-submit="newdescrreq()">
@@ -87,7 +87,7 @@
 	    </div>
 	  </li>
 
-	  <li> Categoria <a href="" ng-click="modificarCategoria()()"> (modificar) </a>: <p> {{requerimientoActual.categoria}}</p>
+	  <li> Categoria <a href="" ng-click="modificarCategoria(nombreReq)()"> (modificar) </a>: <p> {{categoriaReq}}</p>
 	    <div id="modifDescripcion" style="display:{{parte7}}">
 	      <!--Formulario para procesar la modificacion de categoria de requisito.-->
 	      <form ng-submit="newcategreq()">
@@ -95,6 +95,15 @@
 		<button type="submit"> Save </button>
 	      </form>
 	    </div>
+	  </li>
+	  <li>Tareas asociadas:
+	  <ul>
+		  <li ng-repeat="tarea in tareasReq">
+		  		{{tarea.nombre}} <a href="" style="color: red" ng-click="eliminarTarea(tarea.nombre)()"> (eliminar) </a> <a href="" ng-click="modificarTarea(tarea.nombre)"> (modificar): </a>
+		  		<div>{{tarea.descripcion}}</div>
+		  </li>
+
+	</ul>
 	  </li>
 	</ul>
 	<a href="" ng-click="volver()"> Volver </a>

@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
+router.get('/',function(req,res){
+	res.render('index',{});
+
+})
+
 // Aqui se autentica al usuario de forma sencilla y se obtienen sus proyectos.
 router.post('/login', function(req, res) {
 	var username 			= req.body.usuario;
@@ -28,8 +33,8 @@ router.post('/login', function(req, res) {
 				{usuario: username}, 
 				function(e,projects){
 
-			    return res.render('test0', 
-			    //res.json(
+			    //return res.('test0', 
+			    return res.json(
 				    {
 				        usuario: user.nombre,
 				        proyectos: projects
@@ -52,7 +57,7 @@ router.get('/requirements', function(req, res) {
 		'nombre', 
 		function(e,requirements){
 
-	    res.render('test1', 
+	    return res.json( 
 		    {
 		        proyecto 		: project,
 		        requerimientos 	: requirements
@@ -64,12 +69,15 @@ router.get('/requirements', function(req, res) {
 // Se obtienen las tareas asociadas a un usuario, proyecto y requerimiento 
 // dado.
 router.get('/tasks', function(req, res) {
+	
 	var project 				= req.param('proyecto');
 	var username 				= req.param('usuario');
 	var requirementName 		= req.param('requerimiento');
 	var db 						= req.db;
 	var requirementCollection 	= db.get('requerimiento');
 	var taskCollection 			= db.get('tarea');
+
+
 
 	requirementCollection.findOne(
 		{nombre: requirementName, usuario: username, proyecto: project}, 
@@ -79,7 +87,7 @@ router.get('/tasks', function(req, res) {
 			{usuario: username, proyecto: project, requerimiento: requirementName}, 
 			function(e,tasks){
 
-		    res.render('test2', 
+		    return res.json( 
 			    {
 			        proyecto 		: project,
 			        requerimiento 	: requirementName,
