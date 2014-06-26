@@ -1,0 +1,11 @@
+<h1><%= proyecto %>:</h1>
+
+<h2>Requerimientos:</h2>
+<ul id="requerimientos">
+  <% requerimientos.forEach(function(requerimiento){ %>
+    <li>
+    	<h3><%= requerimiento.nombre %></h3>
+    </li>
+  <% }) %>
+</ul>
+

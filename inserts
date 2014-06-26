@@ -1,7 +1,8 @@
-nuevosusuarios = [{"_id": "usuario1", "clave": "clave1"},
-                  {"_id": "usuario2", "clave": "clave2"},
-                  {"_id": "usuario3", "clave": "clave3"}]
+nuevosusuarios = [{"nombre": "usuario1", "clave": "clave1"},
+                  {"nombre": "usuario2", "clave": "clave2"},
+                  {"nombre": "usuario3", "clave": "clave3"}]
 db.usuario.insert(nuevosusuarios);
+
 
 nuevosproyectos = [{"nombre": "proyecto1", "usuario": "usuario1"}, 
                    {"nombre": "proyecto2", "usuario": "usuario1"}, 
@@ -11,20 +12,18 @@ nuevosproyectos = [{"nombre": "proyecto1", "usuario": "usuario1"},
                    {"nombre": "proyecto1", "usuario": "usuario3"}]
 db.proyecto.insert(nuevosproyectos);
 
-// Estos requerimientos estan todos asociados al usuario 1
 
-nuevosrequerimientos = [{"nombre": "requerimiento1", "descripcion": "este es el requerimiento 1 del proyecto 1 del usuario 1", "proyecto": ObjectId("53ab112749c410d6417b063c"), "clasificacion": "funcional"},
-                        {"nombre": "requerimiento2", "descripcion": "este es el requerimiento 2 del proyecto 1 del usuario 1", "proyecto": ObjectId("53ab112749c410d6417b063c"), "clasificacion": "no funcional"},
-                        {"nombre": "requerimiento1", "descripcion": "este es el requerimiento 1 del proyecto 2 del usuario 1", "proyecto": ObjectId("53ab112749c410d6417b063d"), "clasificacion": "funcional"},
-                        {"nombre": "requerimiento1", "descripcion": "este es el requerimiento 1 del proyecto 3 del usuario 1", "proyecto": ObjectId("53ab112749c410d6417b063e"), "clasificacion": "no funcional"}]
+nuevosrequerimientos = 
+[{"nombre": "requerimiento1","descripcion": "este es el requerimiento 1 del proyecto 1 del usuario 1", "proyecto": "proyecto1", "usuario": "usuario1", "clasificacion": "funcional"},
+{"nombre": "requerimiento2","descripcion": "este es el requerimiento 2 del proyecto 1 del usuario 1", "proyecto": "proyecto1", "usuario": "usuario1", "clasificacion": "funcional"},
+{"nombre": "requerimiento1","descripcion": "este es el requerimiento 1 del proyecto 2 del usuario 1", "proyecto": "proyecto2", "usuario": "usuario1", "clasificacion": "no funcional"},
+{"nombre": "requerimiento1","descripcion": "este es el requerimiento 1 del proyecto 3 del usuario 1", "proyecto": "proyecto3", "usuario": "usuario1", "clasificacion": "funcional"}]
+
 db.requerimiento.insert(nuevosrequerimientos);
 
-nuevastareas = [{"nombre": "tarea1", "descripcion": "esta es la tarea 1 del requerimiento 1 del proyecto 1 del usuario 1", "requerimiento": ObjectId("53ab150049c410d6417b0646")},
-                {"nombre": "tarea2", "descripcion": "esta es la tarea 2 del requerimiento 1 del proyecto 1 del usuario 1", "requerimiento": ObjectId("53ab150049c410d6417b0646")},
-                {"nombre": "tarea3", "descripcion": "esta es la tarea 3 del requerimiento 1 del proyecto 1 del usuario 1", "requerimiento": ObjectId("53ab150049c410d6417b0646")}]
+
+nuevastareas = 
+[{"nombre": "tarea1", "descripcion": "esta es la tarea 1 del requerimiento 1 del proyecto 1 del usuario 1", "requerimiento": "requerimiento1", "proyecto": "proyecto1", "usuario": "usuario1"},
+{"nombre": "tarea2", "descripcion": "esta es la tarea 2 del requerimiento 1 del proyecto 1 del usuario 1", "requerimiento": "requerimiento1", "proyecto": "proyecto1", "usuario": "usuario1"},
+{"nombre": "tarea3", "descripcion": "esta es la tarea 3 del requerimiento 1 del proyecto 1 del usuario 1", "requerimiento": "requerimiento1", "proyecto": "proyecto1", "usuario": "usuario1"}]
 db.tarea.insert(nuevastareas);
-
-
-
-
-

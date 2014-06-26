@@ -1,0 +1,16 @@
+<h1><%= proyecto %>:</h1>
+
+<h2><%= requerimiento %></h2>
+<h3><%= descripcion %></h3>
+<h3><%= categoria %></h3>
+
+<h2>Tareas:</h2>
+<ul id="tareas">
+  <% tareas.forEach(function(tarea){ %>
+    <li>
+    	<h3><%= tarea.nombre %></h3>
+    	<h4><%= tarea.descripcion %><h4>
+    </li>
+  <% }) %>
+</ul>
+
