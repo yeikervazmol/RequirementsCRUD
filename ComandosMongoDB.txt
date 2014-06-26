@@ -1,0 +1,10 @@
+Mostrar todas las colecciones
+db.getCollectionNames()
+
+Eliminar una coleccion completa
+db.collection.drop()
+
+Mostrar en formato json una coleccion
+db.collection.find().pretty()
+
+
