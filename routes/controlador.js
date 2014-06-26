@@ -40,6 +40,32 @@ router.post('/login', function(req, res) {
 	});
 });
 
+// Insertar un proyecto a un usuario en la base de datos.
+router.post('/addproject', function(req, res) {
+
+
+    var db 					= req.db;
+	var projectName 		= req.body.proyecto;
+    var username 			= req.body.usuario;
+    var projectCollection 	= db.get('proyecto');
+
+    projectCollection.insert({
+        "nombre"    : projectName,
+        "usuario"   : username
+    }, function (err, doc) {
+
+        if (err) {
+            res.send("The database has defended itself against the dark magic.");
+        }
+        else {
+
+        	res.json(doc);
+        }
+    });
+});
+
+
+
 // Se obtienen los requerimientos asociados a un usuario y proyecto dado.
 router.get('/requirements', function(req, res) {
 	var project 				= req.param('proyecto');
