@@ -166,12 +166,15 @@ function ControladorReqs($scope,$http) {
   $scope.actualizarRequerimiento=function(nombReq){
     $scope.parte6="none";
     var igual = 0;
-    for(i=0; i < $scope.requerimientos.length; i++){
-      if($scope.requerimientos[i].nombre == $scope.newnomb){
-        igual = 1;
-        break;
+    if($scope.newnomb != nombReq){
+      for(i=0; i < $scope.requerimientos.length; i++){
+        if($scope.requerimientos[i].nombre == $scope.newnomb){
+          igual = 1;
+          break;
+        }
       }
     }
+    
     if(igual){
         $scope.error_message="No puede haber un requerimiento con el mismo nombre";  
 
