@@ -106,35 +106,50 @@ function ControladorReqs($scope,$http) {
   $scope.volver= function(){
     $scope.parte5="none";
     $scope.parte3="block";
+    $scope.newcateg="";
+    $scope.newdescr="";
+    $scope.descrreq="";
+    $scope.nombrereq="";
+    $scope.categreq="";
+    $scope.nombretask="";
+    $scope.descrtask="";
+    $scope.error_message="";  
     $scope.abrirProyecto($scope.proyecto);
   };
   
   //Funcion que agrega un nuevo requerimiento al proyecto con el que se esta
   //trabajando.
   $scope.newreque= function(){
+    var igual = 0;
+    $scope.abrirProyecto($scope.proyecto);
+    for(i=0; i < $scope.requerimientos.length; i++){
+      if($scope.requerimientos[i].nombre == $scope.nombrereq){
+        igual = 1;
+        break;
+      }
+    }
+    if(igual){
+        $scope.error_message="No puede haber un requerimiento con el mismo nombre";  
 
-
-
-    $http.post('/addrequirement',{
-      requerimiento : $scope.nombrereq,
-      descripcion : $scope.descrreq,
-      clasificacion : $scope.categreq,
-      usuario : $scope.usuario,
-      proyecto : $scope.proyecto
-    }).success(function(){
-      $scope.abrirProyecto($scope.proyecto);
-      $scope.descrreq="";
-      $scope.nombrereq="";
-      $scope.categreq=""; 
-      $scope.error_message="";  
-  
-
-    });
-
- 
-  
+    }else{
+      $http.post('/addrequirement',{
+        requerimiento : $scope.nombrereq,
+        descripcion : $scope.descrreq,
+        clasificacion : $scope.categreq,
+        usuario : $scope.usuario,
+        proyecto : $scope.proyecto
+      }).success(function(){
+        $scope.abrirProyecto($scope.proyecto);
+        $scope.descrreq="";
+        $scope.nombrereq="";
+        $scope.categreq="";
+        $scope.error_message="";
     
+
+      });
+    }
       
+  
   };
 
   
@@ -150,21 +165,32 @@ function ControladorReqs($scope,$http) {
   
   $scope.actualizarRequerimiento=function(nombReq){
     $scope.parte6="none";
-    
-    $http.put('/updaterequirement',{
-      requerimientoViejo : nombReq,
-      requerimientoNuevo : $scope.newnomb,
-      descripcionNueva : $scope.newdescr,
-      clasificacionNueva : $scope.newcateg,
-      proyecto : $scope.proyecto,
-      usuario : $scope.usuario
-    }).success(function(){
-      if(nombReq != $scope.newnomb){
-        nombReq = $scope.newnomb;
+    var igual = 0;
+    for(i=0; i < $scope.requerimientos.length; i++){
+      if($scope.requerimientos[i].nombre == $scope.newnomb){
+        igual = 1;
+        break;
       }
-      $scope.abrirRequerimiento(nombReq);
-    });
+    }
+    if(igual){
+        $scope.error_message="No puede haber un requerimiento con el mismo nombre";  
 
+    }else{
+      $http.put('/updaterequirement',{
+        requerimientoViejo : nombReq,
+        requerimientoNuevo : $scope.newnomb,
+        descripcionNueva : $scope.newdescr,
+        clasificacionNueva : $scope.newcateg,
+        proyecto : $scope.proyecto,
+        usuario : $scope.usuario
+      }).success(function(){
+        if(nombReq != $scope.newnomb){
+          nombReq = $scope.newnomb;
+        }
+        $scope.abrirRequerimiento(nombReq);
+        $scope.error_message="";
+      });
+    }
   }
 
   //Funcion que es ejecutada para modificar la descripcion de un requerimiento.
@@ -210,7 +236,18 @@ function ControladorReqs($scope,$http) {
   };
 
   $scope.agregarTarea= function(a){
-    $http.post('/addtask',{
+    $scope.abrirRequerimiento(a);
+    var igual =0;
+    for(i=0; i < $scope.tareasReq.length; i++){
+      if($scope.tareasReq[i].nombre == $scope.nombretask){
+        igual = 1;
+        break;
+      }
+    }
+    if(igual){
+      $scope.error_message = "No puede haber una tarea en este requerimiento con el mismo nombre";
+    }else{
+       $http.post('/addtask',{
         tarea : $scope.nombretask,
         descripcion : $scope.descrtask,
         requerimiento : a,
@@ -219,8 +256,12 @@ function ControladorReqs($scope,$http) {
     }).success(function(){
         $scope.nombretask="";
         $scope.descrtask="";
-        $scope.abrirRequerimiento(a); 
+        $scope.abrirRequerimiento(a);
+        $scope.error_message =""; 
     });
+
+    }
+   
   };
 
   $scope.eliminarTarea= function(nTarea,nombreReq){
