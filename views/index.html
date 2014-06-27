@@ -75,27 +75,15 @@
       <!--Parte de la pagina en la cual el usuario podra ver en detalle un 
       requerimiento dado.Ofrece la posibilidad de modificar el requerimiento.-->
       <div id="muestraRequerimiento" style="display:{{parte5}}">
-	<h4> {{nombreReq}} </h4> 
-	<a href="" ng-click="modificarNombre(nombreReq)"> (modificar nombre): </a>
+	<h4> {{nombreReq}} </h4>
+	
 	<ul>
-	  <li> Descripcion <a href="" ng-click="modificarDescripcion(nombreReq)"> (modificar): </a><p> {{descrReq}} </p>
-	    <div id="modifDescripcion" style="display:{{parte6}}">
-	      <!--Formulario para procesar la modificacion de descrp de requisito.-->
-	      <form ng-submit="newdescrreq(nombreReq)">
-		<textarea ng-model="newdescr" ROWS=3 COLS=30 > </textarea>
-		<button type="submit"> Save </button>
-	      </form>
-	    </div>
+	  <li> Descripcion: <p> {{descrReq}} </p>
+	    
 	  </li>
 
-	  <li> Categoria <a href="" ng-click="modificarCategoria(nombreReq)()"> (modificar) </a>: <p> {{categoriaReq}}</p>
-	    <div id="modifDescripcion" style="display:{{parte7}}">
-	      <!--Formulario para procesar la modificacion de categoria de requisito.-->
-	      <form ng-submit="newcategreq(nombreReq)">
-		<textarea ng-model="newcateg" ROWS=3 COLS=30 > </textarea>
-		<button type="submit"> Save </button>
-	      </form>
-	    </div>
+	  <li> Categoria: <p> {{categoriaReq}}</p>
+	    
 	  </li>
 	  <li>Tareas asociadas:
 	  	<ul>
@@ -116,6 +104,20 @@
 			    </br>
 			  <button type="submit"> Agregar </button>
 	</form>
+	<a href="" ng-click="modificarRequerimiento()"> (modificar datos del requerimiento): </a>
+	</br>
+	<div id="modifReq" style="display:{{parte6}}">
+	<form ng-submit="actualizarRequerimiento(nombreReq)">
+		<textarea ng-model="newnomb" ROWS=1 COLS=30 placeholder="Nuevo Nombre" > </textarea>
+		</br>
+		<textarea ng-model="newdescr" ROWS=3 COLS=30 placeholder="Nueva Descripcion"> </textarea>
+		</br>
+		<textarea ng-model="newcateg" ROWS=3 COLS=30 placeholder ="Nueva Clasificacion" > </textarea>
+		</br>
+		<button type="submit"> Actualizar </button>
+		</br>
+	</form>
+	</div>
 
 	<a href="" ng-click="volver()"> Volver </a>
     </div>   

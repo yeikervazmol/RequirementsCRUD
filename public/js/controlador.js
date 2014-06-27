@@ -106,7 +106,7 @@ function ControladorReqs($scope,$http) {
   $scope.volver= function(){
     $scope.parte5="none";
     $scope.parte3="block";
-    $scope.requerimientoActual="";
+    $scope.abrirProyecto($scope.proyecto);
   };
   
   //Funcion que agrega un nuevo requerimiento al proyecto con el que se esta
@@ -134,32 +134,37 @@ function ControladorReqs($scope,$http) {
   
   //Par de funciones que hacen visible las secciones para la modificacion
   //de requisitos
-  $scope.modificarDescripcion= function(){
-    $scope.parte6="block";   
+  $scope.modificarRequerimiento= function(){
+    $scope.parte6="block";
+    $scope.newnomb = $scope.nombreReq;
+    $scope.newdescr = $scope.descrReq;
+    $scope.newcateg = $scope.categoriaReq;   
   };
   
-  $scope.modificarCategoria= function(){
-    $scope.parte7="block";   
-  };
+  $scope.actualizarRequerimiento=function(nombReq){
+    $scope.parte6="none";
+    
+    $http.put('/updaterequirement',{
+      requerimientoViejo : nombReq,
+      requerimientoNuevo : $scope.newnomb,
+      descripcionNueva : $scope.newdescr,
+      clasificacionNueva : $scope.newcateg,
+      proyecto : $scope.proyecto,
+      usuario : $scope.usuario
+    }).success(function(){
+      if(nombReq != $scope.newnomb){
+        nombReq = $scope.newnomb;
+      }
+      $scope.abrirRequerimiento(nombReq);
+    });
 
-  $scope.modificarTarea=function(){
-    $scope.parte8="block";
   }
-  
-  
+
   //Funcion que es ejecutada para modificar la descripcion de un requerimiento.
   //Se modifica en el arreglo, luego debe hacerse persistente en la base de datos.
   $scope.newdescrreq= function(){
     $scope.parte6="none"; 
-    //Busco el requerimiento en el arreglo, lo modifico y luego
-    //se hace permanente el cambio en la bd.
-    for (j=0; j< $scope.requerimientos.length; j++){
-      if ($scope.requerimientos[j].nombre==$scope.requerimientoActual.nombre){
-	$scope.requerimientos[j].descr=$scope.newdescr;
-	$scope.requerimientoActual.descr=$scope.newdescr;
-	$scope.newdescr="";
-      }
-    }
+    
   };
   
    //Funcion analoga a la anterior, pero para la modificacion de la categoria.
@@ -175,6 +180,8 @@ function ControladorReqs($scope,$http) {
       }
     }
   };
+
+
   
   //Funcion a ser ejecutada para eliminar un requerimiento.
   //Se elimina del arreglo, luego debe hacerse persistente en la bd.
