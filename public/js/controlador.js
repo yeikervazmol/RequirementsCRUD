@@ -130,19 +130,7 @@ function ControladorReqs($scope,$http) {
       
   };
 
-  $scope.agregarTarea= function(a){
-    $http.post('/addtask',{
-        tarea : $scope.nombretask,
-        descripcion : $scope.descrtask,
-        requerimiento : a,
-        proyecto : $scope.proyecto,
-        usuario : $scope.usuario
-    }).success(function(){
-        $scope.nombretask="";
-        $scope.descrtask="";
-        $scope.abrirRequerimiento(a); 
-    });
-  };
+  
   
   //Par de funciones que hacen visible las secciones para la modificacion
   //de requisitos
@@ -191,7 +179,7 @@ function ControladorReqs($scope,$http) {
   //Funcion a ser ejecutada para eliminar un requerimiento.
   //Se elimina del arreglo, luego debe hacerse persistente en la bd.
   $scope.eliminarReq= function(re){
-    //Busco index en el arreglo del req a eliminar y luego uso splice
+    
     $http({method: 'DELETE', url: '/deleterequirement',params:{
       requerimiento : re,
       proyecto : $scope.proyecto,
@@ -207,6 +195,35 @@ function ControladorReqs($scope,$http) {
 
   };
 
+  $scope.agregarTarea= function(a){
+    $http.post('/addtask',{
+        tarea : $scope.nombretask,
+        descripcion : $scope.descrtask,
+        requerimiento : a,
+        proyecto : $scope.proyecto,
+        usuario : $scope.usuario
+    }).success(function(){
+        $scope.nombretask="";
+        $scope.descrtask="";
+        $scope.abrirRequerimiento(a); 
+    });
+  };
+
+  $scope.eliminarTarea= function(nTarea,nombreReq){
+    $http({method: 'DELETE', url: '/deletetask',params:{
+      requerimiento : nombreReq,
+      proyecto : $scope.proyecto,
+      usuario : $scope.usuario,
+      tarea : nTarea
+    }}).
+    success(function(data, status, headers, config) {
+      $scope.abrirRequerimiento(nombreReq);
+    
+    }).
+    error(function(data, status, headers, config) {
+      
+    });
+  };
   
   
   //Funcion que retorna a la pagina inicio, y reinicializa todo.
