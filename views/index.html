@@ -52,6 +52,7 @@
       <div id="trabajoProyecto" style="display:{{parte3}}" >
 	<h3> {{proyecto}} </h3>
 	<h4> Requerimientos para {{proyecto}} </h4>
+	<h5> {{error_message}} </h5>
 	<ul>
 	    <li ng-repeat="re in requerimientos">
 	      <a href="" ng-click="abrirRequerimiento(re.nombre)"> 
@@ -64,11 +65,22 @@
 	<form ng-submit="newreque()">
 	  <p> Agregar Requerimiento: </p>
 	  <ul>
-	    <li><input type="text" ng-model="nombrereq" placeholder="Nombre del req"><br></br></li>
-	    <li><input type="text" ng-model="descrreq" placeholder="Descripcion del req"><br></br></li>
-	    <li><input type="text" ng-model="categreq" placeholder="funcional o no funcional"><br></br></li>
+	    <li><input type="text" ng-model="nombrereq" placeholder="Nombre del req" required><br></br></li>
+	    <li><input type="text" ng-model="descrreq" placeholder="Descripcion del req" required><br></br></li>
+
+
+	    Categoria: 
+	  </br>
+	    <select ng-model="categreq" name="Funcional o no funcional" required>
+	    	<option value="">Seleccione uno</option>
+	    	<option value ="funcional" selected> Funcional </option>
+	    	<option value ="no funcional"> No Funcional </option>
+	    </select>
+	    </br>
 	  </ul>
+	  
 	  <button type="submit"> Agregar </button>
+	  
 	</form>
       </div>
 
@@ -98,9 +110,9 @@
 	<form ng-submit="agregarTarea(nombreReq)">
 			  <p> Agregar Tarea: </p>
 
-			    <input type="text" ng-model="nombretask" placeholder="Nombre de la tarea">
+			    <input type="text" ng-model="nombretask" placeholder="Nombre de la tarea" required>
 			    </br>
-			    <input type="text" ng-model="descrtask" placeholder="Descripcion de la tarea">
+			    <input type="text" ng-model="descrtask" placeholder="Descripcion de la tarea" required>
 			    </br>
 			  <button type="submit"> Agregar </button>
 	</form>
@@ -108,11 +120,15 @@
 	</br>
 	<div id="modifReq" style="display:{{parte6}}">
 	<form ng-submit="actualizarRequerimiento(nombreReq)">
-		<textarea ng-model="newnomb" ROWS=1 COLS=30 placeholder="Nuevo Nombre" > </textarea>
+		<textarea ng-model="newnomb" ROWS=1 COLS=30 placeholder="Nuevo Nombre" required> </textarea>
 		</br>
-		<textarea ng-model="newdescr" ROWS=3 COLS=30 placeholder="Nueva Descripcion"> </textarea>
+		<textarea ng-model="newdescr" ROWS=3 COLS=30 placeholder="Nueva Descripcion" required> </textarea>
 		</br>
-		<textarea ng-model="newcateg" ROWS=3 COLS=30 placeholder ="Nueva Clasificacion" > </textarea>
+		<select ng-model="newcateg" name="Funcional o no funcional" required>
+			<option value=""> Seleccione uno </option>
+	    	<option value ="funcional"> Funcional </option>
+	    	<option value ="no funcional"> No Funcional </option>
+	    </select>
 		</br>
 		<button type="submit"> Actualizar </button>
 		</br>

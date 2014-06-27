@@ -113,6 +113,8 @@ function ControladorReqs($scope,$http) {
   //trabajando.
   $scope.newreque= function(){
 
+
+
     $http.post('/addrequirement',{
       requerimiento : $scope.nombrereq,
       descripcion : $scope.descrreq,
@@ -123,10 +125,15 @@ function ControladorReqs($scope,$http) {
       $scope.abrirProyecto($scope.proyecto);
       $scope.descrreq="";
       $scope.nombrereq="";
-      $scope.categreq="";   
+      $scope.categreq=""; 
+      $scope.error_message="";  
   
 
     });
+
+ 
+  
+    
       
   };
 
@@ -138,7 +145,7 @@ function ControladorReqs($scope,$http) {
     $scope.parte6="block";
     $scope.newnomb = $scope.nombreReq;
     $scope.newdescr = $scope.descrReq;
-    $scope.newcateg = $scope.categoriaReq;   
+    $scope.newcateg = $scope.categReq;   
   };
   
   $scope.actualizarRequerimiento=function(nombReq){
