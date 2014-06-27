@@ -129,6 +129,20 @@ function ControladorReqs($scope,$http) {
     });
       
   };
+
+  $scope.agregarTarea= function(a){
+    $http.post('/addtask',{
+        tarea : $scope.nombretask,
+        descripcion : $scope.descrtask,
+        requerimiento : a,
+        proyecto : $scope.proyecto,
+        usuario : $scope.usuario
+    }).success(function(){
+        $scope.nombretask="";
+        $scope.descrtask="";
+        $scope.abrirRequerimiento(a); 
+    });
+  };
   
   //Par de funciones que hacen visible las secciones para la modificacion
   //de requisitos
@@ -178,18 +192,22 @@ function ControladorReqs($scope,$http) {
   //Se elimina del arreglo, luego debe hacerse persistente en la bd.
   $scope.eliminarReq= function(re){
     //Busco index en el arreglo del req a eliminar y luego uso splice
-
-    $htpp.delete('/deleterequirement',{
-      param : {
-        requerimiento : re,
-        proyecto : $scope.proyecto,
-        usuario : $scope.usuario
-      }
+    $http({method: 'DELETE', url: '/deleterequirement',params:{
+      requerimiento : re,
+      proyecto : $scope.proyecto,
+      usuario : $scope.usuario
+    }}).
+    success(function(data, status, headers, config) {
+      $scope.abrirProyecto($scope.proyecto);
+    
+    }).
+    error(function(data, status, headers, config) {
       
-    }).success(function(data){
-        $scope.abrirProyecto($scope.proyecto);
-      });
+    });
+
   };
+
+  
   
   //Funcion que retorna a la pagina inicio, y reinicializa todo.
   $scope.volverHome= function(re){

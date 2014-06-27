@@ -210,7 +210,6 @@ router.get('/tasks', function(req, res) {
 // Insertar una tarea asociado a un usuario, requerimiento y proyecto en la
 // base de datos.
 router.post('/addtask', function(req, res) {
-
     var db                  = req.db;
 	var taskName 	        = req.body.tarea;
 	var description 		= req.body.descripcion;

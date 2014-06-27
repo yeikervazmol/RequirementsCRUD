@@ -55,7 +55,7 @@
 	<ul>
 	    <li ng-repeat="re in requerimientos">
 	      <a href="" ng-click="abrirRequerimiento(re.nombre)"> 
-		{{re.nombre}} <a href="" style="color:red" ng-click="eliminarReq(re.nombre)"> (eliminar) </a> 
+		{{re.nombre}} </a> <a href="" style="color:red" ng-click="eliminarReq(re.nombre)"> (eliminar) 
 	      </a>  
 	  </li>
 	</ul>
@@ -75,7 +75,8 @@
       <!--Parte de la pagina en la cual el usuario podra ver en detalle un 
       requerimiento dado.Ofrece la posibilidad de modificar el requerimiento.-->
       <div id="muestraRequerimiento" style="display:{{parte5}}">
-	<h4> {{nombreReq}} </h4>
+	<h4> {{nombreReq}} </h4> 
+	<a href="" ng-click="modificarNombre(nombreReq)"> (modificar nombre): </a>
 	<ul>
 	  <li> Descripcion <a href="" ng-click="modificarDescripcion(nombreReq)"> (modificar): </a><p> {{descrReq}} </p>
 	    <div id="modifDescripcion" style="display:{{parte6}}">
@@ -99,31 +100,25 @@
 	  <li>Tareas asociadas:
 	  	<ul>
 		  <li ng-repeat="tarea in tareasReq">
-		  		{{tarea.nombre}} <a href="" style="color: red" ng-click="eliminarTarea(tarea.nombre)()"> (eliminar) </a> <a href="" ng-click="modificarTarea(tarea.nombre)"> (modificar): </a>
-		  		<div id="modifDescripcion" style="display:{{parte8}}">
-	      			<!--Formulario para procesar la modificacion de tarea de requisito.-->
-	      			<form ng-submit="newdesctask(tarea.nombre)">
-						<textarea ng-model="newtask" ROWS=2 COLS=30 > </textarea>
-						<button type="submit"> Save </button>
-					</form>
-				</div>
-		  		<div>{{tarea.descripcion}}</div>
+		  		{{tarea.nombre}} <a href="" style="color: red" ng-click="eliminarTarea(tarea.nombre)"> (eliminar)</a> <div>{{tarea.descripcion}}</div>
 		  </li>
 		  
 		</ul>
 	 </li>
+	 </ul>
 	 <!--Formulario para agregar nuevas tareas.-->
-			<form ng-submit="newtask()">
+	<form ng-submit="agregarTarea(nombreReq)">
 			  <p> Agregar Tarea: </p>
 
-			    <li><input type="text" ng-model="nombretask" placeholder="Nombre de la tarea"><br></br></li>
-
+			    <input type="text" ng-model="nombretask" placeholder="Nombre de la tarea">
+			    </br>
+			    <input type="text" ng-model="descrtask" placeholder="Descripcion de la tarea">
+			    </br>
 			  <button type="submit"> Agregar </button>
-			</form>
-	 <button 
-	</ul>
+	</form>
+
 	<a href="" ng-click="volver()"> Volver </a>
-      </div>   
+    </div>   
 
     <hr> </hr>
 	<a href="" ng-click="volverHome()"> Home </a>
