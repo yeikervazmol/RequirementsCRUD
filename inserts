@@ -2,11 +2,6 @@ nuevosusuarios = [{"nombre": "usuario1", "clave": "clave1"},
                   {"nombre": "usuario2", "clave": "clave2"}]
 db.usuario.insert(nuevosusuarios);
 
-
-db.usuario.remove({});
-db.proyecto.remove({});
-db.requerimiento.remove({});
-
 nuevosproyectos = [{"nombre": "ProyectoSmartCities", "usuario": "usuario1"}, 
                    {"nombre": "ProyectoI","usuario": "usuario2"}]
 db.proyecto.insert(nuevosproyectos);
