@@ -12,6 +12,11 @@ a {
   font-family: 'sans-serif';
 }
 
+.error_message {
+	color: #e74c3c;
+	padding: 10px;
+}
+
 /**********/
 /* Header */
 /**********/
@@ -37,4 +42,22 @@ a {
 
 #login {
 	padding: 5%;
+	text-align: center;
+}
+
+#login h2 {
+	padding-bottom: 20px;
+}
+
+#login form {
+	padding: 0 25%;
+}
+
+#login form button {
+	background-color: #2f889a;
+	border: none;
+}
+
+#login form button:hover {
+	background-color: #2f88df;
 }

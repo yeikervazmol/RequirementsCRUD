@@ -3,6 +3,7 @@
   <head>
     <title>Requisitos</title>
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
     <script type="text/javascript" src="js/controlador.js"></script>
     <link rel="stylesheet" href="stylesheets/style.css">
@@ -26,26 +27,36 @@
 	los que sean necesarios. De no ser correcta, en la variable "error" se
 	mostrara un mensaje pertinente y la persona volvera a intentarlo.-->
 	<div id="login" style="display:{{parte1}}">
+		<h2>Bienvenido al sistema de requisitos</h2>
+
 		<form ng-submit="login()">
-			<input type="text" ng-model="usuario">
-			<input type="password" ng-model="clave">
-			<button type="submit"> Login </button>
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-user"></i></span>
+				<input class="form-control" type="text" ng-model="usuario" placeholder="Usuario">
+			</div>
+			<br>
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-key"></i></span>
+				<input class="form-control" type="password" ng-model="clave" placeholder="Clave">
+			</div>
+			<br>
+			<button type="submit" class="btn btn-primary btn-lg btn-block"> Login </button>
 		</form>
-		<p> {{error_login}}</p>
+		<p class="error_message">{{error_login}}</p>
 	</div>
       
-      <!--Div que se hace visible si la persona ha pasado el nivel de autenticacion.
-      En el se desplegaran los proyectos disponibles para trabajar (aquellos que
-      esten en el arreglo "proyectos" del controlador.La persona seleccionara
-      uno de ellos haciendole click.-->
-      <div id="exito" style="display:{{parte2}}">
-	<p> Bienvenido {{usuario}}, con que proyecto desea trabajar: </p>
-	<ul>
-	  <li ng-repeat="pro in proyectos">
-	  <a href="" ng-click="abrirProyecto(pro.nombre)"> {{pro.nombre}}  </a>
-	  </li>
-	</ul>     
-      </div>
+	<!--Div que se hace visible si la persona ha pasado el nivel de autenticacion.
+	En el se desplegaran los proyectos disponibles para trabajar (aquellos que
+	esten en el arreglo "proyectos" del controlador.La persona seleccionara
+	uno de ellos haciendole click.-->
+	<div id="exito" style="display:{{parte2}}">
+		<p> Bienvenido {{usuario}}, con que proyecto desea trabajar: </p>
+		<ul>
+			<li ng-repeat="pro in proyectos">
+			<a href="" ng-click="abrirProyecto(pro.nombre)"> {{pro.nombre}}  </a>
+		</li>
+		</ul>     
+	</div>
 
       <!--Una vez que el usuario selecciona un proyecto para trabajar, se le desplegara
       una lista con los requerimientos almacenados para dicho proyecto. El usuario
@@ -125,10 +136,11 @@
 
 	<a href="" ng-click="volver()"> Volver </a>
     </div>   
-
+    <!-- footer 
     <hr> </hr>
-	<a href="" ng-click="volverHome()"> Home </a>
-    </div>
+		<a href="" ng-click="volverHome()"> Home </a>
+    -->
+    </div> <!-- end controller -->
 
   </body>
 
