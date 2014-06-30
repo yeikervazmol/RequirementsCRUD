@@ -50,12 +50,11 @@
 	esten en el arreglo "proyectos" del controlador.La persona seleccionara
 	uno de ellos haciendole click.-->
 	<div id="exito" style="display:{{parte2}}">
-		<p> Bienvenido {{usuario}}, con que proyecto desea trabajar: </p>
-		<ul>
-			<li ng-repeat="pro in proyectos">
-			<a href="" ng-click="abrirProyecto(pro.nombre)"> {{pro.nombre}}  </a>
-		</li>
-		</ul>     
+		<h2> Bienvenido {{usuario}}, elija el proyecto a trabajar: </h2>
+		<br>
+		<div class="list-group">
+			<a href="" class="list-group-item" ng-repeat="pro in proyectos" ng-click="abrirProyecto(pro.nombre)"><span class="badge"><i id="carret" class="fa fa-caret-right"></i></span> {{pro.nombre}} </a>
+		</div>     
 	</div>
 
       <!--Una vez que el usuario selecciona un proyecto para trabajar, se le desplegara

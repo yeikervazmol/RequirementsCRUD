@@ -61,3 +61,23 @@ a {
 #login form button:hover {
 	background-color: #2f88df;
 }
+
+/********/
+/* Home */
+/********/
+
+#exito {
+	padding: 2% 5%;
+}
+
+#exito .list-group {
+	width: 40%;
+}
+
+#exito .list-group a {
+	color: #2f889a;
+}
+
+#exito .badge {
+	background-color: #2f889a;
+}

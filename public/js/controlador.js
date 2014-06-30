@@ -43,6 +43,7 @@ function ControladorReqs($scope,$http) {
         $scope.parte2="block";
         $scope.parte1="none";
         $scope.error_login="";
+        $scope.page="Home";
       }
 
     })
@@ -73,6 +74,7 @@ function ControladorReqs($scope,$http) {
       
       $scope.requerimientos=data.requerimientos;
 
+      $scope.page=a;
     })
 
     .error(function(){
