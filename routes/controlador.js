@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
+router.get('/',function(req,res){
+	res.render('index',{});
+
+})
+
 // Aqui se autentica al usuario de forma sencilla y se obtienen sus proyectos.
 router.post('/login', function(req, res) {
 	
@@ -29,8 +34,8 @@ router.post('/login', function(req, res) {
 				{usuario: username}, 
 				function(e,projects){
 
-			    return res.render('test0', 
-			    //res.json(
+			    //return res.('test0', 
+			    return res.json(
 				    {
 				        usuario: user.nombre,
 				        proyectos: projects
@@ -79,7 +84,7 @@ router.get('/requirements', function(req, res) {
 		'nombre', 
 		function(e,requirements){
 
-	    res.render('test1', 
+	    return res.json( 
 		    {
 		        proyecto 		: project,
 		        requerimientos 	: requirements
@@ -153,7 +158,7 @@ router.delete('/deleterequirement', function(req, res) {
 			    				"Solo se borraron las tareas de este proyecto."
 			    			);
 			    		} else {
-			    			res.json(
+			    			return res.json(
 			    			{
 			    				proyectoBorrado: result1,
 			    				tareasBorradas: result
@@ -210,6 +215,8 @@ router.get('/tasks', function(req, res) {
 	var requirementCollection 	= db.get('requerimiento');
 	var taskCollection 			= db.get('tarea');
 
+
+
 	requirementCollection.findOne(
 		{nombre: requirementName, usuario: username, proyecto: project}, 
 		function(e,requirement){
@@ -218,7 +225,7 @@ router.get('/tasks', function(req, res) {
 			{usuario: username, proyecto: project, requerimiento: requirementName}, 
 			function(e,tasks){
 
-		    res.render('test2', 
+		    return res.json( 
 			    {
 			        proyecto 		: project,
 			        requerimiento 	: requirementName,
@@ -235,7 +242,6 @@ router.get('/tasks', function(req, res) {
 // Insertar una tarea asociado a un usuario, requerimiento y proyecto en la
 // base de datos.
 router.post('/addtask', function(req, res) {
-
     var db                  = req.db;
 	var taskName 	        = req.body.tarea;
 	var description 		= req.body.descripcion;

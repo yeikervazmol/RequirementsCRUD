@@ -1,7 +1,6 @@
 // Funcion que ejerce las veces de controlador para la region del html definida
 // en index.html.
-
-function ControladorReqs($scope) {
+function ControladorReqs($scope,$http) {
   
 //   variables que sirven para hacer visible o no regiones especificas del html.
 //   (parte del atributo style="display:<parte>")
@@ -12,13 +11,13 @@ function ControladorReqs($scope) {
   $scope.parte5="none";
   $scope.parte6="none";
   $scope.parte7="none";
+  $scope.parte8="none";
   
 //   Se llenaria con la lista de usuarios y claves de la bd
-  $scope.usuarios=[{nombre:"carlos", clave:"hola"},{nombre:"pepe", clave:"hola2"},
-                   {nombre:"kiwi", clave:"naranja"}];
+  $scope.usuarios=[];
   $scope.error_login="";
   //Proyectos que deberan ser cargados desde la bd
-  $scope.proyectos=["proyecto1", "proyecto2", "proyecto3"];
+  $scope.proyectos=[];
   
   //Funcion que se encarga de validar a un usuario. Lo busca en un arreglo llamado
   //usuarios (este arreglo debe ser llenado al inicio, es decir siempre tenerlo llenado).
@@ -27,23 +26,34 @@ function ControladorReqs($scope) {
   $scope.login= function(){
     var encontre=0;
     var i;
-    for (i=0; i< $scope.usuarios.length; i++){
-      if (($scope.usuarios[i].nombre == $scope.usuario) && ($scope.usuarios[i].clave == $scope.clave)){
-	encontre=1;
+
+
+
+    $http.post('/login',{ usuario : $scope.usuario, clave : $scope.clave})
+
+    .success(function(data){
+      
+      if(data.usuario == "Usuario no autorizado"){
+        $scope.error_login = "Usuario no autorizado";
+      }else{
+        $scope.usuario = data.usuario;
+        $scope.proyectos = data.proyectos;
+        $scope.parte2="block";
+        $scope.parte1="none";
+        $scope.error_login="";
       }
-    }
-    if (encontre == 1){
-      $scope.parte2="block";
-      $scope.parte1="none";
-      $scope.error_login="";
-    }
-    else{
-      $scope.error_login="Clave/contrasena invalidos: intente de nuevo";
-      $scope.usuario="";
-      $scope.clave="";
-    }
+
+    })
+
+    .error(function(){
+      $scope.usuario = "Usrizado";
+
+
+    });
   };
-  
+
+
+
   //Funcion que es llamada cuando se clickea sobre un proyecto para desplegar
   //los requerimientos del mismo. Simplemente hace visible y no visible la
   //parte deseada del html.En laa variable proyecto se almacena el nombre
@@ -52,14 +62,22 @@ function ControladorReqs($scope) {
   //IMPORTANTE BD: Al momento de hacer esto, se debe traer de la base de datos
   //todos los requerimientos y tareas asociadas a dicho proyecto.
   $scope.abrirProyecto= function(a){
-    $scope.parte2="none"
-    $scope.parte3="block";
-    $scope.proyecto=a;
-    $scope.requerimientos=[{nombre: "Requerimiento 1", descr:"bla bla bla", proy:"proyecto1", categoria:"funcional"},
-			 {nombre: "Requerimiento 2", descr:"bla bla bla", proy:"proyecto1", categoria:"funcional"},
-			 {nombre: "Requerimiento 3", descr:"bla bla bla", proy:"proyecto1", categoria:"no funcional"},
-			 {nombre: "Requerimiento 4", descr:"bla bla bla", proy:"proyecto1", categoria:"funcional"},
-			 {nombre: "Requerimiento 5", descr:"bla bla bla", proy:"proyecto1", categoria:"no funcional"}];
+    
+
+    $http.get('/requirements',{params :{usuario : $scope.usuario, proyecto : a}}).success(function(data){
+      $scope.proyecto = data.proyecto;
+      $scope.parte2="none"
+      $scope.parte3="block";
+      
+      $scope.requerimientos=data.requerimientos;
+
+    })
+
+    .error(function(){
+      $scope.proyecto = "Error";
+
+    })
+    
   };
   
   //Funcion que es llamada cuando el usuario desea ver en detalle un
@@ -67,9 +85,19 @@ function ControladorReqs($scope) {
   //clickeado. La variable del scope requerimientoActual hace referencia
   //al requerimiento que se esta trabajandoo visualizando en detalle.
   $scope.abrirRequerimiento= function(a){
-    $scope.parte5="block";
-    $scope.parte3="none";
-    $scope.requerimientoActual=a;
+    $http.get('/tasks', {params:{usuario : $scope.usuario,
+                                  proyecto : $scope.proyecto,
+                                  requerimiento : a}})
+    .success(function(data){
+      $scope.parte5="block";
+      $scope.parte3="none";
+      $scope.nombreReq = data.requerimiento;
+      $scope.descrReq = data.descripcion;
+      $scope.categoriaReq = data.categoria;
+      $scope.tareasReq = data.tareas;
+
+    });
+    
   };
   
   //Funcion para volver a la lista de requerimientos una vez se ha visto
@@ -78,42 +106,65 @@ function ControladorReqs($scope) {
   $scope.volver= function(){
     $scope.parte5="none";
     $scope.parte3="block";
-    $scope.requerimientoActual="";
+    $scope.abrirProyecto($scope.proyecto);
   };
   
   //Funcion que agrega un nuevo requerimiento al proyecto con el que se esta
   //trabajando.
   $scope.newreque= function(){
-      $scope.requerimientos.push({nombre:$scope.nombrereq, descr:$scope.descrreq, categoria: $scope.categreq});
+
+    $http.post('/addrequirement',{
+      requerimiento : $scope.nombrereq,
+      descripcion : $scope.descrreq,
+      clasificacion : $scope.categreq,
+      usuario : $scope.usuario,
+      proyecto : $scope.proyecto
+    }).success(function(){
+      $scope.abrirProyecto($scope.proyecto);
       $scope.descrreq="";
       $scope.nombrereq="";
       $scope.categreq="";   
+  
+
+    });
+      
   };
+
+  
   
   //Par de funciones que hacen visible las secciones para la modificacion
   //de requisitos
-  $scope.modificarDescripcion= function(){
-    $scope.parte6="block";   
+  $scope.modificarRequerimiento= function(){
+    $scope.parte6="block";
+    $scope.newnomb = $scope.nombreReq;
+    $scope.newdescr = $scope.descrReq;
+    $scope.newcateg = $scope.categoriaReq;   
   };
   
-  $scope.modificarCategoria= function(){
-    $scope.parte7="block";   
-  };
-  
-  
+  $scope.actualizarRequerimiento=function(nombReq){
+    $scope.parte6="none";
+    
+    $http.put('/updaterequirement',{
+      requerimientoViejo : nombReq,
+      requerimientoNuevo : $scope.newnomb,
+      descripcionNueva : $scope.newdescr,
+      clasificacionNueva : $scope.newcateg,
+      proyecto : $scope.proyecto,
+      usuario : $scope.usuario
+    }).success(function(){
+      if(nombReq != $scope.newnomb){
+        nombReq = $scope.newnomb;
+      }
+      $scope.abrirRequerimiento(nombReq);
+    });
+
+  }
+
   //Funcion que es ejecutada para modificar la descripcion de un requerimiento.
   //Se modifica en el arreglo, luego debe hacerse persistente en la base de datos.
   $scope.newdescrreq= function(){
     $scope.parte6="none"; 
-    //Busco el requerimiento en el arreglo, lo modifico y luego
-    //se hace permanente el cambio en la bd.
-    for (j=0; j< $scope.requerimientos.length; j++){
-      if ($scope.requerimientos[j].nombre==$scope.requerimientoActual.nombre){
-	$scope.requerimientos[j].descr=$scope.newdescr;
-	$scope.requerimientoActual.descr=$scope.newdescr;
-	$scope.newdescr="";
-      }
-    }
+    
   };
   
    //Funcion analoga a la anterior, pero para la modificacion de la categoria.
@@ -129,17 +180,58 @@ function ControladorReqs($scope) {
       }
     }
   };
+
+
   
   //Funcion a ser ejecutada para eliminar un requerimiento.
   //Se elimina del arreglo, luego debe hacerse persistente en la bd.
   $scope.eliminarReq= function(re){
-    //Busco index en el arreglo del req a eliminar y luego uso splice
-    for (w=0;w<$scope.requerimientos.length;w++){
-      if ($scope.requerimientos[w].nombre == re.nombre){
-	$scope.requerimientos.splice(w,1);
-      }
-    }
+    
+    $http({method: 'DELETE', url: '/deleterequirement',params:{
+      requerimiento : re,
+      proyecto : $scope.proyecto,
+      usuario : $scope.usuario
+    }}).
+    success(function(data, status, headers, config) {
+      $scope.abrirProyecto($scope.proyecto);
+    
+    }).
+    error(function(data, status, headers, config) {
+      
+    });
+
   };
+
+  $scope.agregarTarea= function(a){
+    $http.post('/addtask',{
+        tarea : $scope.nombretask,
+        descripcion : $scope.descrtask,
+        requerimiento : a,
+        proyecto : $scope.proyecto,
+        usuario : $scope.usuario
+    }).success(function(){
+        $scope.nombretask="";
+        $scope.descrtask="";
+        $scope.abrirRequerimiento(a); 
+    });
+  };
+
+  $scope.eliminarTarea= function(nTarea,nombreReq){
+    $http({method: 'DELETE', url: '/deletetask',params:{
+      requerimiento : nombreReq,
+      proyecto : $scope.proyecto,
+      usuario : $scope.usuario,
+      tarea : nTarea
+    }}).
+    success(function(data, status, headers, config) {
+      $scope.abrirRequerimiento(nombreReq);
+    
+    }).
+    error(function(data, status, headers, config) {
+      
+    });
+  };
+  
   
   //Funcion que retorna a la pagina inicio, y reinicializa todo.
   $scope.volverHome= function(re){
@@ -150,6 +242,7 @@ function ControladorReqs($scope) {
     $scope.parte5="none";
     $scope.parte6="none";
     $scope.parte7="none";
+    $scope.parte8="none";
     $scope.requerimientoActual="";
     $scope.requerimientos=[];
     $scope.usuario="";

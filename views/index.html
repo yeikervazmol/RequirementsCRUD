@@ -4,43 +4,120 @@
     <title>Requisitos</title>
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
-    <script type="text/javascript" src="controlador.js"></script>
+    <script type="text/javascript" src="js/controlador.js"></script>
+    <link href="stylesheets/index.css" rel="stylesheet" type="text/css">
+
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="stylesheets/reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="stylesheets/style.css"> <!-- Gem style -->
+	<script src="js/modernizr.js"></script> <!-- Modernizr -->
+
   </head>
 
   <!--Cuerdo de la aplicacion: colocamos ng-app para aseverar que es una app
   manejada por ng.-->
   <body ng-app>
-    <h2>Requisitos</h2>
-    <hr></hr>
-    
-    <!--Outer div: todo lo que este dentro de este div sera nuestra aplicacion
+  	<!--Outer div: todo lo que este dentro de este div sera nuestra aplicacion
     como tal y estara controlada por el controlador que alli se especifica-->
     <div ng-controller="ControladorReqs">
 
-      <!--Div que comienza visible, a traves de el se hace el login del usuario.
+    <header role="banner">
+
+    	<div id="cd-logo"><a href="#0" ng-click="volverHome()"><img src="img/cd-logo.svg" alt="Logo"></a></div>
+
+		<nav class="main-nav">
+			<ul>
+				<!-- inser more links here -->
+				<li><a class="cd-signin" href="#0">Entrar</a></li>
+				<li><a class="cd-signup" href="#0">Registrarse</a></li>
+			</ul>
+		</nav>
+	</header>
+    <div class="cd-user-modal" style="display:{{parte1}}"> <!-- this is the entire modal form, including the background -->
+		<div class="cd-user-modal-container" > <!-- this is the container wrapper -->
+			<ul class="cd-switcher">
+				<li><a href="#0">Entrar</a></li>
+				<li><a href="#0">Registrarse</a></li>
+			</ul>
+
+			<!--Div que comienza visible, a traves de el se hace el login del usuario.
       Si la autenticacion es correcta, se oculta este div y se hacen visibles
       los que sean necesarios. De no ser correcta, en la variable "error" se
       mostrara un mensaje pertinente y la persona volvera a intentarlo.-->
-      <div id="login" style="display:{{parte1}}">
-	<form ng-submit="login()">
-	  <input type="text" ng-model="usuario">
-	  <input type="password" ng-model="clave">
-	  <button type="submit"> Login </button>
-	</form>
-	<p> {{error_login}}</p>
-      </div>
+
+			<div id="cd-login" > <!-- log in form -->
+				<form ng-submit="login()" class="cd-form">
+					<p class="fieldset">
+						<label class="image-replace cd-email" for="signin-email">Usuario</label>
+						<input ng-model="usuario" class="full-width has-padding has-border" id="signin-email" type="text" placeholder="Usuario">
+					</p>
+
+					<p class="fieldset">
+						<label class="image-replace cd-password" for="signin-password">Contrasena</label>
+						<input ng-model="clave" class="full-width has-padding has-border" id="signin-password" type="password"  placeholder="Password">
+						<span class="cd-error-message">{{error_login}}</span>
+					</p>
+
+					<p class="fieldset">
+						<input class="full-width" type="submit" value="Login">
+					</p>
+				</form>
+			
+				<!-- <a href="#0" class="cd-close-form">Close</a> -->
+			</div> <!-- cd-login -->
+
+			<div id="cd-signup"> <!-- sign up form -->
+				<form class="cd-form">
+					<p class="fieldset">
+						<label class="image-replace cd-username" for="signup-username">Username</label>
+						<input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Username">
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<label class="image-replace cd-email" for="signup-email">E-mail</label>
+						<input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail">
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<label class="image-replace cd-password" for="signup-password">Password</label>
+						<input class="full-width has-padding has-border" id="signup-password" type="text"  placeholder="Password">
+						<a href="#0" class="hide-password">Hide</a>
+						<span class="cd-error-message">Error message here!</span>
+					</p>
+
+					<p class="fieldset">
+						<input type="checkbox" id="accept-terms">
+						<label for="accept-terms">I agree to the <a href="#0">Terms</a></label>
+					</p>
+
+					<p class="fieldset">
+						<input class="full-width has-padding" type="submit" value="Create account">
+					</p>
+				</form>
+
+				<!-- <a href="#0" class="cd-close-form">Close</a> -->
+			</div> <!-- cd-signup -->
+		</div> <!-- cd-user-modal-container -->
+	</div> <!-- cd-user-modal -->
+
+    
+
+      
       
       <!--Div que se hace visible si la persona ha pasado el nivel de autenticacion.
       En el se desplegaran los proyectos disponibles para trabajar (aquellos que
       esten en el arreglo "proyectos" del controlador.La persona seleccionara
       uno de ellos haciendole click.-->
       <div id="exito" style="display:{{parte2}}">
-	<p> Bienvenido, con que proyecto desea trabajar: </p>
-	<ul>
-	  <li ng-repeat="pro in proyectos">
-	  <a href="" ng-click="abrirProyecto(pro)"> {{pro}}  </a>
-	  </li>
-	</ul>     
+		<p> Bienvenido {{usuario}}, con que proyecto desea trabajar: </p>
+		<ul>
+		  <li ng-repeat="pro in proyectos">
+		  <a href="" ng-click="abrirProyecto(pro.nombre)"> {{pro.nombre}}  </a>
+		  </li>
+		</ul>     
       </div>
 
       <!--Una vez que el usuario selecciona un proyecto para trabajar, se le desplegara
@@ -54,8 +131,8 @@
 	<h4> Requerimientos para {{proyecto}} </h4>
 	<ul>
 	    <li ng-repeat="re in requerimientos">
-	      <a href="" ng-click="abrirRequerimiento(re)"> 
-		{{re.nombre}} <a href="" style="color: red" ng-click="eliminarReq(re)()"> (eliminar) </a> 
+	      <a href="" ng-click="abrirRequerimiento(re.nombre)"> 
+		{{re.nombre}} </a> <a href="" style="color:red" ng-click="eliminarReq(re.nombre)"> (eliminar) 
 	      </a>  
 	  </li>
 	</ul>
@@ -75,35 +152,55 @@
       <!--Parte de la pagina en la cual el usuario podra ver en detalle un 
       requerimiento dado.Ofrece la posibilidad de modificar el requerimiento.-->
       <div id="muestraRequerimiento" style="display:{{parte5}}">
-	<h4> {{requerimientoActual.nombre}} </h4>
+	<h4> {{nombreReq}} </h4>
+	
 	<ul>
-	  <li> Descripcion <a href="" ng-click="modificarDescripcion()"> (modificar): </a><p> {{requerimientoActual.descr}} </p>
-	    <div id="modifDescripcion" style="display:{{parte6}}">
-	      <!--Formulario para procesar la modificacion de descrp de requisito.-->
-	      <form ng-submit="newdescrreq()">
-		<textarea ng-model="newdescr" ROWS=3 COLS=30 > </textarea>
-		<button type="submit"> Save </button>
-	      </form>
-	    </div>
+	  <li> Descripcion: <p> {{descrReq}} </p>
+	    
 	  </li>
 
-	  <li> Categoria <a href="" ng-click="modificarCategoria()()"> (modificar) </a>: <p> {{requerimientoActual.categoria}}</p>
-	    <div id="modifDescripcion" style="display:{{parte7}}">
-	      <!--Formulario para procesar la modificacion de categoria de requisito.-->
-	      <form ng-submit="newcategreq()">
-		<textarea ng-model="newcateg" ROWS=3 COLS=30 > </textarea>
-		<button type="submit"> Save </button>
-	      </form>
-	    </div>
+	  <li> Categoria: <p> {{categoriaReq}}</p>
+	    
 	  </li>
-	</ul>
+	  <li>Tareas asociadas:
+	  	<ul>
+		  <li ng-repeat="tarea in tareasReq">
+		  		{{tarea.nombre}} <a href="" style="color: red" ng-click="eliminarTarea(tarea.nombre, nombreReq)"> (eliminar)</a> <div>{{tarea.descripcion}}</div>
+		  </li>
+		  
+		</ul>
+	 </li>
+	 </ul>
+	 <!--Formulario para agregar nuevas tareas.-->
+	<form ng-submit="agregarTarea(nombreReq)">
+			  <p> Agregar Tarea: </p>
+
+			    <input type="text" ng-model="nombretask" placeholder="Nombre de la tarea">
+			    </br>
+			    <input type="text" ng-model="descrtask" placeholder="Descripcion de la tarea">
+			    </br>
+			  <button type="submit"> Agregar </button>
+	</form>
+	<a href="" ng-click="modificarRequerimiento()"> (modificar datos del requerimiento): </a>
+	</br>
+	<div id="modifReq" style="display:{{parte6}}">
+	<form ng-submit="actualizarRequerimiento(nombreReq)">
+		<textarea ng-model="newnomb" ROWS=1 COLS=30 placeholder="Nuevo Nombre" > </textarea>
+		</br>
+		<textarea ng-model="newdescr" ROWS=3 COLS=30 placeholder="Nueva Descripcion"> </textarea>
+		</br>
+		<textarea ng-model="newcateg" ROWS=3 COLS=30 placeholder ="Nueva Clasificacion" > </textarea>
+		</br>
+		<button type="submit"> Actualizar </button>
+		</br>
+	</form>
+	</div>
+
 	<a href="" ng-click="volver()"> Volver </a>
-      </div>   
-
-    <hr> </hr>
-	<a href="" ng-click="volverHome()"> Home </a>
+    </div>   
     </div>
 
   </body>
-
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="js/main.js"></script> <!-- Gem jQuery -->
 </html>
