@@ -5,30 +5,34 @@
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
     <script type="text/javascript" src="js/controlador.js"></script>
+    <link rel="stylesheet" href="stylesheets/style.css">
   </head>
 
   <!--Cuerdo de la aplicacion: colocamos ng-app para aseverar que es una app
   manejada por ng.-->
   <body ng-app>
-    <h2>Requisitos</h2>
-    <hr></hr>
-    
-    <!--Outer div: todo lo que este dentro de este div sera nuestra aplicacion
+
+  <!--Outer div: todo lo que este dentro de este div sera nuestra aplicacion
     como tal y estara controlada por el controlador que alli se especifica-->
     <div ng-controller="ControladorReqs">
+	  <div class="page-header">
+	    <h1 class="title">Requisitos <small>{{page}}</small></h1>
+	  </div>
+    
+    
 
-      <!--Div que comienza visible, a traves de el se hace el login del usuario.
-      Si la autenticacion es correcta, se oculta este div y se hacen visibles
-      los que sean necesarios. De no ser correcta, en la variable "error" se
-      mostrara un mensaje pertinente y la persona volvera a intentarlo.-->
-      <div id="login" style="display:{{parte1}}">
-	<form ng-submit="login()">
-	  <input type="text" ng-model="usuario">
-	  <input type="password" ng-model="clave">
-	  <button type="submit"> Login </button>
-	</form>
-	<p> {{error_login}}</p>
-      </div>
+	<!--Div que comienza visible, a traves de el se hace el login del usuario.
+	Si la autenticacion es correcta, se oculta este div y se hacen visibles
+	los que sean necesarios. De no ser correcta, en la variable "error" se
+	mostrara un mensaje pertinente y la persona volvera a intentarlo.-->
+	<div id="login" style="display:{{parte1}}">
+		<form ng-submit="login()">
+			<input type="text" ng-model="usuario">
+			<input type="password" ng-model="clave">
+			<button type="submit"> Login </button>
+		</form>
+		<p> {{error_login}}</p>
+	</div>
       
       <!--Div que se hace visible si la persona ha pasado el nivel de autenticacion.
       En el se desplegaran los proyectos disponibles para trabajar (aquellos que

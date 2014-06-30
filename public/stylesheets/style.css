@@ -1,8 +1,40 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+/***********/
+/* General */
+/***********/
+
+h1, h2, p {
+	font-family: 'sans-serif';
 }
+
 
 a {
   color: #00B7FF;
+  font-family: 'sans-serif';
+}
+
+/**********/
+/* Header */
+/**********/
+
+.page-header {
+	background-color: #343642;
+	margin: 0;
+}
+
+.page-header .title {
+	padding: 20px  5%;
+	color: white;
+	margin: 0;
+}
+
+.page-header .title small {
+	color: #2f889a;
+}
+
+/*********/
+/* Login */
+/*********/
+
+#login {
+	padding: 5%;
 }

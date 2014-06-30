@@ -19,6 +19,8 @@ function ControladorReqs($scope,$http) {
   //Proyectos que deberan ser cargados desde la bd
   $scope.proyectos=[];
   
+  $scope.page="Login";
+
   //Funcion que se encarga de validar a un usuario. Lo busca en un arreglo llamado
   //usuarios (este arreglo debe ser llenado al inicio, es decir siempre tenerlo llenado).
   //Si el login es correcto, pone a visualizar el div apropiado y si no, indica un
