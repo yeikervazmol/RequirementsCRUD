@@ -64,7 +64,7 @@
     el cambio se vera de inmediato en la pagina gracias al binding de variables de 
     ng.-->
     <div id="trabajoProyecto" style="display:{{parte3}}" >
-        <h2> Requerimientos para {{proyecto}} </h2>
+        <h2> Requerimientos para {{proyecto}} <small><a href="" ng-click="volverHome()">Volver</a></small></h2>
         <br>
         <ul class="list-group">
             <li class="list-group-item" ng-repeat="re in requerimientos">
@@ -101,61 +101,73 @@
         </form>
     </div>
 
-      <!--Parte de la pagina en la cual el usuario podra ver en detalle un 
-      requerimiento dado.Ofrece la posibilidad de modificar el requerimiento.-->
-      <div id="muestraRequerimiento" style="display:{{parte5}}">
-	<h4> {{nombreReq}} </h4>
-	
-	<ul>
-	  <li> Descripcion: <p> {{descrReq}} </p>
-	    
-	  </li>
+    <!--Parte de la pagina en la cual el usuario podra ver en detalle un 
+    requerimiento dado.Ofrece la posibilidad de modificar el requerimiento.-->
+    <div id="muestraRequerimiento" style="display:{{parte5}}">
+        <h2> {{nombreReq}} <small><a href="" ng-click="volver()">Volver</a></small></h2>
+        <br>
+        <ul class="list-group">
+            <li class="list-group-item"> 
+                <h3 class="list-group-item-heading">Descripcion:</h3>
+                <p class="list-group-item-text">{{descrReq}}</p>
+            </li>
+            <li class="list-group-item"> 
+                <h3 class="list-group-item-heading">Categoria:</h3>
+                <p class="list-group-item-text">{{categoriaReq}}</p>
+            </li>
+            <li class="list-group-item"> 
+                <h3 class="list-group-item-heading">Tareas asociadas:</h3>
+                <ol id="tareas">
+                    <li ng-repeat="tarea in tareasReq">
+                	   <h4>{{tarea.nombre}} <span class="glyphicon glyphicon-remove" ng-click="eliminarTarea(tarea.nombre, nombreReq)"></span></h4>
+                       <p>{{tarea.descripcion}}</p>
+                    </li>
+                </ol>
+            </li>
+        </ul>
 
-	  <li> Categoria: <p> {{categoriaReq}}</p>
-	    
-	  </li>
-	  <li>Tareas asociadas:
-	  	<ul>
-		  <li ng-repeat="tarea in tareasReq">
-		  		{{tarea.nombre}} <a href="" style="color: red" ng-click="eliminarTarea(tarea.nombre, nombreReq)"> (eliminar)</a> <div>{{tarea.descripcion}}</div>
-		  </li>
-		  
-		</ul>
-	 </li>
-	 </ul>
-	 <!--Formulario para agregar nuevas tareas.-->
-	<form ng-submit="agregarTarea(nombreReq)">
-			  <p> Agregar Tarea: </p>
+        <h3>Agregar Tarea</h3>
+        <!--Formulario para agregar nuevas tareas.-->
+        <form ng-submit="agregarTarea(nombreReq)">
+            <div class="form-group">
+                <label>Nombre de la Tarea</label>
+                <input class="form-control" type="text" ng-model="nombretask" placeholder="Nombre de la Tarea">
+            </div>  
+            <div class="form-group">
+                <label>Descripcion de la Tarea</label>
+                <input class="form-control" type="text" ng-model="descrreq" placeholder="Descripcion de la Tarea">
+            </div>
+            <button class="btn btn-primary" type="submit">Agregar</button>
+        </form>
+        <br>
+        <a href="" ng-click="modificarRequerimiento()"> <h3>Modificar datos del Requerimiento</h3></a>
 
-			    <input type="text" ng-model="nombretask" placeholder="Nombre de la tarea">
-			    </br>
-			    <input type="text" ng-model="descrtask" placeholder="Descripcion de la tarea">
-			    </br>
-			  <button type="submit"> Agregar </button>
-	</form>
-	<a href="" ng-click="modificarRequerimiento()"> (modificar datos del requerimiento): </a>
-	</br>
-	<div id="modifReq" style="display:{{parte6}}">
-	<form ng-submit="actualizarRequerimiento(nombreReq)">
-		<textarea ng-model="newnomb" ROWS=1 COLS=30 placeholder="Nuevo Nombre" > </textarea>
-		</br>
-		<textarea ng-model="newdescr" ROWS=3 COLS=30 placeholder="Nueva Descripcion"> </textarea>
-		</br>
-		<textarea ng-model="newcateg" ROWS=3 COLS=30 placeholder ="Nueva Clasificacion" > </textarea>
-		</br>
-		<button type="submit"> Actualizar </button>
-		</br>
-	</form>
-	</div>
-
-	<a href="" ng-click="volver()"> Volver </a>
-    </div>   
-    <!-- footer 
-    <hr> </hr>
-		<a href="" ng-click="volverHome()"> Home </a>
-    -->
+        <div id="modifReq" style="display:{{parte6}}">
+            <form ng-submit="actualizarRequerimiento(nombreReq)">
+                <div class="form-group">
+                    <label>Nombre del Requisito</label>
+                    <textarea class="form-control" ng-model="newnomb" ROWS=1 COLS=30 placeholder="Nuevo Nombre" > </textarea>
+                </div>
+                <div class="form-group">
+                    <label>Descripcion del Requisito</label>
+                    <textarea class="form-control" ng-model="newdescr" ROWS=3 COLS=30 placeholder="Nueva Descripcion"> </textarea>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" ng-model="newcateg" name="optionsRadios" id="optionsRadios1" value="funcional" checked="">
+                    Funcional
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" ng-model="newcateg" name="optionsRadios" id="optionsRadios2" value="no funcional">
+                    No Funcional
+                  </label>
+                </div>
+                <button class="btn btn-primary" type="submit"> Actualizar </button>
+            </form>
+        </div>
+    </div>
     </div> <!-- end controller -->
-
   </body>
-
 </html>
