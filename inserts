@@ -1,3 +1,10 @@
+
+
+
+
+
+db.proyecto.delete({});
+
 nuevosusuarios = [{"nombre": "usuario1", "clave": "clave1"},
                   {"nombre": "usuario2", "clave": "clave2"}]
 db.usuario.insert(nuevosusuarios);

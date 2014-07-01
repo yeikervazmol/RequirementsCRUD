@@ -174,7 +174,7 @@ router.delete('/deleterequirement', function(req, res) {
 // Modificar un requerimiento
 // Dado el nombre antiguo del requerimiento a modificar, el proyecto al que pertenece y su usuario, es modificado el requerimiento
 router.put('/updaterequirement', function(req, res) {
-
+    console.log("AQUI ESTA EL ERROR"); 
     var db                      = req.db;
     var requirementNameOld 	    = req.body.requerimientoViejo;
     var requirementNameNew 	    = req.body.requerimientoNuevo;
