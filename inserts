@@ -1,29 +1,39 @@
 nuevosusuarios = [{"nombre": "usuario1", "clave": "clave1"},
-                  {"nombre": "usuario2", "clave": "clave2"},
-                  {"nombre": "usuario3", "clave": "clave3"}]
+                  {"nombre": "usuario2", "clave": "clave2"}]
 db.usuario.insert(nuevosusuarios);
 
-
-nuevosproyectos = [{"nombre": "proyecto1", "usuario": "usuario1"}, 
-                   {"nombre": "proyecto2", "usuario": "usuario1"}, 
-                   {"nombre": "proyecto3", "usuario": "usuario1"},
-                   {"nombre": "proyecto1", "usuario": "usuario2"}, 
-                   {"nombre": "proyecto2", "usuario": "usuario2"}, 
-                   {"nombre": "proyecto1", "usuario": "usuario3"}]
+nuevosproyectos = [{"nombre": "ProyectoSmartCities", "usuario": "usuario1"}, 
+                   {"nombre": "ProyectoI","usuario": "usuario2"}]
 db.proyecto.insert(nuevosproyectos);
 
-
 nuevosrequerimientos = 
-[{"nombre": "requerimiento1","descripcion": "este es el requerimiento 1 del proyecto 1 del usuario 1", "proyecto": "proyecto1", "usuario": "usuario1", "clasificacion": "funcional"},
-{"nombre": "requerimiento2","descripcion": "este es el requerimiento 2 del proyecto 1 del usuario 1", "proyecto": "proyecto1", "usuario": "usuario1", "clasificacion": "funcional"},
-{"nombre": "requerimiento1","descripcion": "este es el requerimiento 1 del proyecto 2 del usuario 1", "proyecto": "proyecto2", "usuario": "usuario1", "clasificacion": "no funcional"},
-{"nombre": "requerimiento1","descripcion": "este es el requerimiento 1 del proyecto 3 del usuario 1", "proyecto": "proyecto3", "usuario": "usuario1", "clasificacion": "funcional"}]
+[{"nombre": "ReqFunc1", "descripcion": "El sistema debe poder obtener el mapa de la ciudad con sus vías y tráfico (grafo)","proyecto": "ProyectoSmartCities", "usuario": "usuario1", "clasificacion": "funcional"},
+ {"nombre": "ReqFunc2", "descripcion": "El sistema debe poder obtener la ubicación actual del usuario en cuestión", "proyecto": "ProyectoSmartCities", "usuario": "usuario1", "clasificacion": "funcional"},
+ {"nombre": "ReqFunc3", "descripcion": "El usuario debe poder pedir una dirección por tiempo", "proyecto": "ProyectoSmartCities", "usuario": "usuario1", "clasificacion": "funcional"},
+ {"nombre": "ReqFunc4", "descripcion": "El usuario debe poder pedir una dirección por distancia", "proyecto": "ProyectoSmartCities", "usuario": "usuario1", "clasificacion": "funcional"},
+ {"nombre": "ReqFunc5", "descripcion": "El sistema debe poder mostrar el tiempo estimado de llegada", "proyecto": "ProyectoSmartCities", "usuario": "usuario1", "clasificacion": "funcional"},
+ {"nombre": "ReqFunc6", "descripcion": "El sistema debe poder mostrar la distancia de la ruta elegida.", "proyecto": "ProyectoSmartCities", "usuario": "usuario1", "clasificacion": "funcional"},
+ {"nombre": "ReqFunc7","descripcion": "El sistema debe poder mostrar ruta en el mapa", "proyecto": "ProyectoSmartCities", "usuario": "usuario1", "clasificacion": "funcional"},
+ {"nombre": "ReqFunc8","descripcion": "El usuario debe poder seguir la ruta","proyecto": "ProyectoSmartCities", "usuario": "usuario1", "clasificacion": "funcional"},
+ {"nombre": "ReqFunc9","descripcion": "El usuario debe poder ver el estado del tráfico en la ruta", "proyecto": "ProyectoSmartCities", "usuario": "usuario1", "clasificacion": "funcional"},
+ {"nombre": "ReqNoFunc2","descripcion":"La aplicación debe poder ser utilizada en cualquier ciudad inteligente (Smart City)", "proyecto": "ProyectoSmartCities", "usuario": "usuario1", "clasificacion": "no   funcional"},
+ {"nombre": "ReqNoFunc1","descripcion": "La aplicación debe estar disponible las 24 horas del dia","proyecto": "ProyectoSmartCities","usuario": "usuario1","clasificacion":"no funcional"},
+ {"nombre": "ReqNoFunc3","descripcion": "El usuario debe poder ver el estado del tráfico en la ruta", "proyecto": "ProyectoSmartCities", "usuario": "usuario1", "clasificacion": "no funcional"},
+ {"nombre": "ReqFunc1","descripcion": "descripción requisito uno", "proyecto": "ProyectoI", "usuario": "usuario2", "clasificacion": "funcional"}]
+
 
 db.requerimiento.insert(nuevosrequerimientos);
 
 
 nuevastareas = 
-[{"nombre": "tarea1", "descripcion": "esta es la tarea 1 del requerimiento 1 del proyecto 1 del usuario 1", "requerimiento": "requerimiento1", "proyecto": "proyecto1", "usuario": "usuario1"},
-{"nombre": "tarea2", "descripcion": "esta es la tarea 2 del requerimiento 1 del proyecto 1 del usuario 1", "requerimiento": "requerimiento1", "proyecto": "proyecto1", "usuario": "usuario1"},
-{"nombre": "tarea3", "descripcion": "esta es la tarea 3 del requerimiento 1 del proyecto 1 del usuario 1", "requerimiento": "requerimiento1", "proyecto": "proyecto1", "usuario": "usuario1"}]
+[{"nombre": "Definir ciudad actual", "descripcion": "Encontrar la ciudad actual","requerimiento": "ReqFunc1", "proyecto": "ProyectoSmartCities","usuario": "usuario1"},
+ {"nombre": "Mostrar ciudad actual", "descripcion": "Devolver el nombre de la ciudad","requerimiento":"ReqFunc1", "proyecto": "ProyectoSmartCities","usuario": "usuario1"},
+ {"nombre": "Posición actual", "descripcion": "Obtiene la posición actual del usuario","requerimiento": "ReqFunc4", "proyecto": "ProyectoSmartCities","usuario": "usuario1"},
+ {"nombre": "Menor tiempo ", "descripcion": "Obtener una dirección por tiempo","requerimiento": "ReqFunc3", "proyecto": "ProyectoSmartCities","usuario": "usuario1"},
+ {"nombre": "Menor distancia", "descripcion": "Obtener una dirección por distancia","requerimiento": "ReqFunc4", "proyecto": "ProyectoSmartCities","usuario": "usuario1"},
+ {"nombre": "Tarea1", "descripcion": "Descripcion de la tarea 1","requerimiento": "ReqFunc8", "proyecto": "ProyectoSmartCities","usuario": "usuario1"},
+ {"nombre": "Tarea2", "descripcion": "Descripcion de la tarea 2","requerimiento": "ReqFunc8", "proyecto": "ProyectoSmartCities","usuario": "usuario1"},
+ {"nombre": "Tarean1", "descripcion": "Descripcion de la tarea 1","requerimiento": "ReqFunc1", "proyecto": "ProyectoI","usuario": "usuario2"},
+ {"nombre": "Tarean2", "descripcion": "Descripcion de la tarea 2","requerimiento": "ReqFunc1", "proyecto": "ProyectoI","usuario": "usuario2"},
+ {"nombre": "Tarean3", "descripcion": "Descripcion de la tarea 3","requerimiento": "ReqFunc1", "proyecto": "ProyectoI","usuario": "usuario2"}]
 db.tarea.insert(nuevastareas);
